@@ -1,0 +1,7 @@
+install python 
+	python-numpy
+ 	python-scipy 	
+	python-matplotlib 
+	python-visual 
+	python-sympy
+
