@@ -5,9 +5,7 @@ Created on 18 Feb 2012
 '''
 
 import sys 
-sys.path.append("/home/the0project/Desktop/ProjectSimulator/python_db")
-sys.path.append("C:\Users\The0s\Desktop\Project\python_db")
-sys.path.append("C:\Users\The0s\Desktop\Project Files\Project\workspace\DriverSim\python_db")
+sys.path.append("C:\Users\tg108.ee-ms6062\Desktop\project_new\python_db")
 from server import *
 from rabbitmqToText import *
 from file_db import * 

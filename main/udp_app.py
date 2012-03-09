@@ -1,6 +1,5 @@
 import sys 
-sys.path.append("/home/the0project/Desktop/ProjectSimulator/python_db")
-sys.path.append("C:\Users\The0s\Desktop\Project Files\Project\workspace\DriverSim\python_db")
+sys.path.append("C:\Users\tg108.ee-ms6062\Desktop\project_new\python_db")
 from db_model import * 
 from server import *
 from UDPtoRabbitmq import *
