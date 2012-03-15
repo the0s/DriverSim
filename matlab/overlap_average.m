@@ -1,6 +1,9 @@
 function [ data, variance ] = overlap_average( data, no, overlap )
-%OVERLAP_AVERAGE Summary of this function goes here
-%   Detailed explanation goes here
+%OVERLAP_AVERAGE Average the data give by creating overlapping decimations
+%of the data
+% data: Any nxm matrix to be averaged
+% no  : Number of samples to average
+% overlap: Number of samples to overlap each time (overlap < no)
 
     mn=[];
     vr=[];

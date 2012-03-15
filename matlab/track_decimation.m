@@ -4,6 +4,5 @@ function [ index ] = track_decimation( distance )
 %   Detailed explanation goes here
 distance_of_track = 2000;
 [~,index]=findpeaks(distance,'MINPEAKHEIGHT',distance_of_track);
-
 end
 
