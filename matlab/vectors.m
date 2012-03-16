@@ -24,10 +24,10 @@ end
 plot3(x,y,z,'r');
 hold on
 
-[s,v1]=overlap_average(dir_vect,100,50);
-[pos,~]=overlap_average(position3d,100,50);
+[s,v1]=overlap_average(dir_vect,50,25);
+[pos,~]=overlap_average(position3d,50,25);
 for f=1:length(s);
-    g= -200:100:200;
+    g= -100:100:100;
     
     i = pos(1,f) + g*(s(1,f)); 
     j = pos(2,f) + g*(s(2,f));
