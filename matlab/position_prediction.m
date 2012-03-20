@@ -31,7 +31,12 @@ Q(4:6,1)= [0;0;0];
 S(1:3,1)= position3d(:,1);
 S(4:6,1)= [0;0;0];
 
-A = [1 0 0 dt 0 0;0 1 0  0 dt 0;0 0 1 0 0 dt;0 0 0 1 0 0;0 0 0 0 1 0;0 0 0 0  0 1];
+A = [1 0 0 dt 0 0;
+     0 1 0 0 dt 0;
+     0 0 1 0 0 dt;
+     0 0 0 1 0 0;
+     0 0 0 0 1 0;
+     0 0 0 0 0 1];
 B = [dtsqr  0 0;0 dtsqr 0; 0 0 dtsqr;dt 0 0; 0 dt 0 ; 0 0 dt];
 
 
@@ -62,10 +67,11 @@ for x=2:size(time,2)
 	%K = P*C'*inv(C*P*C'+Ez);
     K = P*C'/(C*P*C'+Ez);
     
-    % Update the state estimate.  
+    % Update the state estimate.
+    %if mod(x,2)==0
     magic(p,x) = K .* ([position3d(:,x);0;0;0] - C' .* Q(p,x));
     Q(p,x) = Q(p,x) + magic(p,x);
-    
+    %end
     %Q(p,x) = Q(p,x) + K .* ([position3d(:,x);0;0;0] - C' .* Q(p,x));
   
     %Q(p,x) = Q(p,x) + K .* ( Q(p,x) - C' .* [position3d(:,x);0;0;0]); test

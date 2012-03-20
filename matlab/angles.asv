@@ -1,4 +1,4 @@
-function [ angle_vector,angle_vector1,tess,last ] = angles(direction_vectors)
+function [ angle_vector,angle_vector1,tess ] = angles(direction_vectors)
 %TRACK_DIVIDER Find the angle between 2 cosecutive vectors
 %   angle => a.b = |a|*|b|* cos x
 
@@ -7,7 +7,7 @@ function [ angle_vector,angle_vector1,tess,last ] = angles(direction_vectors)
     p=1:size(direction_vectors,1);
 
    z=0; 
-  for y= 0:(block/2):length(direction_vectors)-12
+  for y= 0:(block/2-1):length(direction_vectors)-block    
       for k =(1+y):(block+y-1)
           for j =1:block-(k-y)
             dot_product1 = dot(direction_vectors(:,k), direction_vectors(:,k+j));
@@ -25,7 +25,7 @@ function [ angle_vector,angle_vector1,tess,last ] = angles(direction_vectors)
     %plot(x(1,:)); pause   
     %plot(1:length(angle_vector1),angle_vector1);        
   end
-    figure
+  
   s=0;
   for a=1:length(angle_vector1)
     x = cell2mat(angle_vector1{1,a});
@@ -41,10 +41,8 @@ function [ angle_vector,angle_vector1,tess,last ] = angles(direction_vectors)
    else
     plot(t,newA,'r'); 
    end
-   hold on
+   %hold on
   end
- 
-  last = tess(:,11)';
   plot(11:6:length(tess(:,11))*6+10,tess(:,11),'b');
   
   
