@@ -1,0 +1,20 @@
+
+
+TESTING DATA SET
+
+
+Calculations per samples:
+Label	True+	Marked+	Detect+	Prec.	Recall	F1
+0:	3	3	3	100	100	100
+1:	3	4	4	75	75	75
+2:	3	4	4	75	75	75
+-----------------------------------------------------------------------
+Ov:	9	11	11	81.8182	81.8182	81.8182
+
+Calculations per sequences:
+Label	True+	Marked+	Detect+	Prec.	Recall	F1
+0:	2	2	2	100	100	100
+1:	2	2	2	100	100	100
+2:	0	0	0	0	0	-1.#IND
+-----------------------------------------------------------------------
+Ov:	4	4	4	100	100	100

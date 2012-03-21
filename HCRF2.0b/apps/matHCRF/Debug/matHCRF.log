@@ -1,0 +1,23 @@
+﻿Build started 21/03/2012 00:07:42.
+     1>Project "C:\Users\The0s\Desktop\Project Files\HCRF2.0b\apps\matHCRF\matHCRF.vcxproj" on node 3 (build target(s)).
+     1>InitializeBuildStatus:
+         Creating "Debug\matHCRF.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         All outputs are up-to-date.
+       ResourceCompile:
+         All outputs are up-to-date.
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\Microsoft.CppBuild.targets(990,5): warning MSB8012: TargetPath(C:\Users\The0s\Desktop\Project Files\HCRF2.0b\apps\matHCRF\Debug\matHCRF.dll) does not match the Linker's OutputFile property value (C:\Users\The0s\Desktop\Project Files\HCRF2.0b\bin\matHCRF.mexw32). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Link.OutputFile).
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\Microsoft.CppBuild.targets(991,5): warning MSB8012: TargetExt(.dll) does not match the Linker's OutputFile property value (.mexw32). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Link.OutputFile).
+       Link:
+         All outputs are up-to-date.
+         matHCRF.vcxproj -> C:\Users\The0s\Desktop\Project Files\HCRF2.0b\apps\matHCRF\Debug\matHCRF.dll
+       Manifest:
+         All outputs are up-to-date.
+       FinalizeBuildStatus:
+         Deleting file "Debug\matHCRF.unsuccessfulbuild".
+         Touching "Debug\matHCRF.lastbuildstate".
+     1>Done Building Project "C:\Users\The0s\Desktop\Project Files\HCRF2.0b\apps\matHCRF\matHCRF.vcxproj" (build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:00.17

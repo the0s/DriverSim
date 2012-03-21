@@ -1,0 +1,22 @@
+﻿Build started 21/03/2012 00:15:52.
+     1>Project "C:\Users\The0s\Desktop\Project Files\HCRF2.0b\libs\3rdParty\liblbfgs\lib\lib.vcxproj" on node 2 (rebuild target(s)).
+     1>_PrepareForClean:
+         Deleting file "Debug\lib.lastbuildstate".
+       InitializeBuildStatus:
+         Creating "Debug\lib.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I"C:\Users\The0s\Desktop\Project Files\HCRF2.0b\apps\include" /I..\include /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _LIB /D USE_SSE /D __SSE2__ /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt lbfgs.c
+         lbfgs.c
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\Microsoft.CppBuild.targets(1151,5): warning MSB8012: TargetPath(C:\Users\The0s\Desktop\Project Files\HCRF2.0b\apps\Debug\lib.lib) does not match the Library's OutputFile property value (C:\Users\The0s\Desktop\Project Files\HCRF2.0b\libs\3rdParty\liblbfgs\lib\lbfgs_debug.lib). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Lib.OutputFile).
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\Microsoft.CppBuild.targets(1153,5): warning MSB8012: TargetName(lib) does not match the Library's OutputFile property value (lbfgs_debug). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Lib.OutputFile).
+       Lib:
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\Lib.exe /OUT:".\lbfgs_debug.lib" /NOLOGO Debug\lbfgs.obj
+         lib.vcxproj -> C:\Users\The0s\Desktop\Project Files\HCRF2.0b\apps\Debug\lib.lib
+       FinalizeBuildStatus:
+         Deleting file "Debug\lib.unsuccessfulbuild".
+         Touching "Debug\lib.lastbuildstate".
+     1>Done Building Project "C:\Users\The0s\Desktop\Project Files\HCRF2.0b\libs\3rdParty\liblbfgs\lib\lib.vcxproj" (rebuild target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:03.07

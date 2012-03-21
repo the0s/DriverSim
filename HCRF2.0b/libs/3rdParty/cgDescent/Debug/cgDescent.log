@@ -1,0 +1,22 @@
+﻿Build started 21/03/2012 00:15:55.
+     1>Project "C:\Users\The0s\Desktop\Project Files\HCRF2.0b\libs\3rdParty\cgDescent\cgDescent.vcxproj" on node 3 (rebuild target(s)).
+     1>_PrepareForClean:
+         Deleting file "Debug\cgDescent.lastbuildstate".
+       InitializeBuildStatus:
+         Creating "Debug\cgDescent.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I./include /Z7 /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _LIB /D _UNICODE /D UNICODE /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"C:\Users\The0s\Desktop\Project Files\HCRF2.0b\apps\Debug\\vc90d.pdb" /Gd /TP /analyze- /errorReport:prompt src\cg_descent.cpp
+         cg_descent.cpp
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\Microsoft.CppBuild.targets(1151,5): warning MSB8012: TargetPath(C:\Users\The0s\Desktop\Project Files\HCRF2.0b\apps\Debug\cgDescent.lib) does not match the Library's OutputFile property value (C:\Users\The0s\Desktop\Project Files\HCRF2.0b\libs\3rdParty\cgDescent\lib\cgDescentd.lib). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Lib.OutputFile).
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\Microsoft.CppBuild.targets(1153,5): warning MSB8012: TargetName(cgDescent) does not match the Library's OutputFile property value (cgDescentd). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Lib.OutputFile).
+       Lib:
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\Lib.exe /OUT:"./lib/cgDescentd.lib" /NOLOGO /NODEFAULTLIB Debug\cg_descent.obj
+         cgDescent.vcxproj -> C:\Users\The0s\Desktop\Project Files\HCRF2.0b\apps\Debug\cgDescent.lib
+       FinalizeBuildStatus:
+         Deleting file "Debug\cgDescent.unsuccessfulbuild".
+         Touching "Debug\cgDescent.lastbuildstate".
+     1>Done Building Project "C:\Users\The0s\Desktop\Project Files\HCRF2.0b\libs\3rdParty\cgDescent\cgDescent.vcxproj" (rebuild target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:01.40

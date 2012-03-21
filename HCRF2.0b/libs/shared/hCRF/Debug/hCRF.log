@@ -1,0 +1,19 @@
+﻿Build started 21/03/2012 00:23:42.
+     1>Project "C:\Users\The0s\Desktop\Project Files\HCRF2.0b\libs\shared\hCRF\hCRF.vcxproj" on node 2 (build target(s)).
+     1>InitializeBuildStatus:
+         Creating "Debug\hCRF.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         All outputs are up-to-date.
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\Microsoft.CppBuild.targets(1151,5): warning MSB8012: TargetPath(C:\Users\The0s\Desktop\Project Files\HCRF2.0b\apps\Debug\hCRF.lib) does not match the Library's OutputFile property value (C:\Users\The0s\Desktop\Project Files\HCRF2.0b\libs\shared\hCRF\lib\hCRFd.lib). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Lib.OutputFile).
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\Microsoft.CppBuild.targets(1153,5): warning MSB8012: TargetName(hCRF) does not match the Library's OutputFile property value (hCRFd). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Lib.OutputFile).
+       Lib:
+         All outputs are up-to-date.
+         hCRF.vcxproj -> C:\Users\The0s\Desktop\Project Files\HCRF2.0b\apps\Debug\hCRF.lib
+       FinalizeBuildStatus:
+         Deleting file "Debug\hCRF.unsuccessfulbuild".
+         Touching "Debug\hCRF.lastbuildstate".
+     1>Done Building Project "C:\Users\The0s\Desktop\Project Files\HCRF2.0b\libs\shared\hCRF\hCRF.vcxproj" (build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:00.46

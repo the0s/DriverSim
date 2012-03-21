@@ -1,0 +1,215 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Optimizers">
+      <UniqueIdentifier>{775858ce-caa7-43e6-be71-1535a887e51f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Toolboxes">
+      <UniqueIdentifier>{eed13fe0-5a2b-4203-b854-e958f6f3e07b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Evaluators">
+      <UniqueIdentifier>{a81bb74a-b32e-4707-908e-44a7f04a1c6a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Features">
+      <UniqueIdentifier>{2d541051-07a7-4878-892e-c755d51b19f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Gradients">
+      <UniqueIdentifier>{a7757f7c-7f0b-42cd-9f30-42c181acac09}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\InferenceEngines">
+      <UniqueIdentifier>{5435b1eb-049a-4cbd-9863-f7cc5a239dcb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Header Files\Features">
+      <UniqueIdentifier>{c93521a5-1c47-4f6f-8df2-94f239e40fe2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\dataset.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Dummys.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\featuregenerator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\matrix.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\matrixSSE2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\model.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MyFeatures.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MyToolbox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\optimizer.cpp">
+      <Filter>Source Files\Optimizers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\OptimizerCG.cpp">
+      <Filter>Source Files\Optimizers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\OptimizerLBFGS.cpp">
+      <Filter>Source Files\Optimizers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\OptimizerUncOptim.cpp">
+      <Filter>Source Files\Optimizers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\toolbox.cpp">
+      <Filter>Source Files\Toolboxes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ToolboxCRF.cpp">
+      <Filter>Source Files\Toolboxes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ToolboxGHCRF.cpp">
+      <Filter>Source Files\Toolboxes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ToolboxHCRF.cpp">
+      <Filter>Source Files\Toolboxes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ToolboxLDCRF.cpp">
+      <Filter>Source Files\Toolboxes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\evaluator.cpp">
+      <Filter>Source Files\Evaluators</Filter>
+    </ClCompile>
+    <ClCompile Include="src\evaluatorCRF.cpp">
+      <Filter>Source Files\Evaluators</Filter>
+    </ClCompile>
+    <ClCompile Include="src\evaluatorHCRF.cpp">
+      <Filter>Source Files\Evaluators</Filter>
+    </ClCompile>
+    <ClCompile Include="src\evaluatorLDCRF.cpp">
+      <Filter>Source Files\Evaluators</Filter>
+    </ClCompile>
+    <ClCompile Include="src\EdgeFeatures.cpp">
+      <Filter>Source Files\Features</Filter>
+    </ClCompile>
+    <ClCompile Include="src\FeaturesOne.cpp">
+      <Filter>Source Files\Features</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LabelEdgeFeatures.cpp">
+      <Filter>Source Files\Features</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RawFeatures.cpp">
+      <Filter>Source Files\Features</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RawFeaturesSquare.cpp">
+      <Filter>Source Files\Features</Filter>
+    </ClCompile>
+    <ClCompile Include="src\WindowRawFeatures.cpp">
+      <Filter>Source Files\Features</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gradient.cpp">
+      <Filter>Source Files\Gradients</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GradientCRF.cpp">
+      <Filter>Source Files\Gradients</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GradientFD.cpp">
+      <Filter>Source Files\Gradients</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GradientHCRF.cpp">
+      <Filter>Source Files\Gradients</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GradientLDCRF.cpp">
+      <Filter>Source Files\Gradients</Filter>
+    </ClCompile>
+    <ClCompile Include="src\inferenceengine.cpp">
+      <Filter>Source Files\InferenceEngines</Filter>
+    </ClCompile>
+    <ClCompile Include="src\InferenceEngineBrute.cpp">
+      <Filter>Source Files\InferenceEngines</Filter>
+    </ClCompile>
+    <ClCompile Include="src\InferenceEngineFB.cpp">
+      <Filter>Source Files\InferenceEngines</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ReadMe.txt">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="src\matrix.inl">
+      <Filter>Header Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\dataset.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\evaluator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\featuregenerator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gradient.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\hCRF.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\hcrfExcep.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\inferenceengine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\matrix.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\model.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MyFeatures.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MyToolbox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\optimizer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\toolbox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\EdgeFeatures.h">
+      <Filter>Header Files\Features</Filter>
+    </ClInclude>
+    <ClInclude Include="include\FeaturesOne.h">
+      <Filter>Header Files\Features</Filter>
+    </ClInclude>
+    <ClInclude Include="include\LabelEdgeFeatures.h">
+      <Filter>Header Files\Features</Filter>
+    </ClInclude>
+    <ClInclude Include="include\RawFeatures.h">
+      <Filter>Header Files\Features</Filter>
+    </ClInclude>
+    <ClInclude Include="include\RawFeaturesSquare.h">
+      <Filter>Header Files\Features</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SharedFeatures.h">
+      <Filter>Header Files\Features</Filter>
+    </ClInclude>
+    <ClInclude Include="include\WindowRawFeatures.h">
+      <Filter>Header Files\Features</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
