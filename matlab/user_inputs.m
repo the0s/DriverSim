@@ -13,12 +13,13 @@ function [ usr_input,variance ] = user_inputs(filename)
     steering = A(15,:);    
     gear = A(6,:);
     handbrake = A(18,:);
+     speed = A(2,:);
     clutch = A(5,:);
     time = A(8,:)/1000;
     
     dt = (time(11)-time(1))/10;
     
-    usr_input = [gas; brake; steering; gear; time;];
+    usr_input = [gas; brake; steering; gear;speed; time;];
     variance=[];
     
     

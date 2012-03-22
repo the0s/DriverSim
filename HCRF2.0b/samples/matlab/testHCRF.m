@@ -39,10 +39,11 @@ for i = 1:size(seqs, 2)
     modelHCRF.windowRecSize=size(seqs{i},2);
     if size(seqs{i},2) <= modelHCRF.windowRecSize
         subSeq = seqs(i);
-        newLabels{i}(1) = mode(labels{i});
-        matHCRF('setData',subSeq,[],int32(newLabels{i}(1)));        
+        %newLabels{i}(1) =mode(labels{i});
+        %matHCRF('setData',subSeq,[],int32(newLabels{i}(1))); 
+        matHCRF('setData',subSeq,[],[]); 
         matHCRF('test');
-        llSeq =matHCRF('getResults');
+        [llSeq newLabels{i}(1)]=matHCRF('getResults');
         ll{i} = llSeq{1};
     else
         for w = 1:size(seqs{i}, 2)-modelHCRF.windowRecSize
