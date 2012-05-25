@@ -6,12 +6,12 @@ function [ param,er,all_struct ] = csvTrainCreateAngles ( angles )
 %%provides plots 
 plotting = 'n';
 
-[ Indexa ] = lap_structure( 'lap2-golf1.txt', 50,16);
+[ Indexa ] = lap_structure( 'lap2-golf1.txt', 60,18);
  
-filenames= {'violaris-golf'};
-            {'violaris2-golf';
+filenames= {'violaris-golf'
+            'violaris2-golf';
             'theo-last-golf';
-            'theo-golf';
+            'theo-golf'
             'kotsios-golf';
             'harold-golf';
             'aadil-golf';
@@ -29,7 +29,7 @@ filenames= {'violaris-golf'};
             'xristos-golf'
            };
   
-numbers=[9];[9 8 7 6 5 4 2 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0;
+numbers=[9 8 7 6 5 4 2 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0;
          5 4 3 2 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0;
          4 3 2 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0;
          9 8 7 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0;
@@ -83,7 +83,7 @@ class={'violaris' 0;
                if Model_Group{1,f} == angles
                     for o=1:size(Model_Group{2,f},2)
                         er{p,1} = (Model_Group{2,f}{1,o});
-                        %param(p,:) = raw2model((Model_Group{2,f}{1,o})',classnum(1,h));
+                        param(p,:) = raw2model((Model_Group{2,f}{1,o})',classnum(1,h));
                         p=p+1;                       
                     end
                     
@@ -99,13 +99,13 @@ class={'violaris' 0;
  end
     
 
-%for t=1:size(param,2)-1
-%    temp = max(abs(param(:,t)));
-%    if temp ~=0
-%        param(:,t)= param(:,t)/temp;
-%    end
-%end
-%cell2csv('comeback2.csv', num2cell(param));
+for t=1:size(param,2)-1
+    temp = max(abs(param(:,t)));
+    if temp ~=0
+        param(:,t)= param(:,t)/temp;
+    end
+end
+cell2csv('all_angle.csv', num2cell(param));
 
 end
     

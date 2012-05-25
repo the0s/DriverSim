@@ -19,12 +19,12 @@ parameters(1,13) = var(raw(:,1));
 parameters(1,14) = var(raw(:,2));
 parameters(1,15) = var(raw(:,3));
 parameters(1,16) = var(raw(:,4));
-parameters(1,17) =  corr(raw(:,1),raw(:,2));
-parameters(1,18) =  corr(raw(:,1),raw(:,3));
-parameters(1,19) =  corr(raw(:,1),raw(:,4));
-parameters(1,20) =  corr(raw(:,2),raw(:,3));
-parameters(1,21) =  corr(raw(:,2),raw(:,4));
-parameters(1,22) =  corr(raw(:,3),raw(:,4));
+parameters(1,17) = 0;% corr(raw(:,1),raw(:,2));
+parameters(1,18) = 0;% corr(raw(:,1),raw(:,3));
+parameters(1,19) = 0;% corr(raw(:,1),raw(:,4));
+parameters(1,20) = 0;% corr(raw(:,2),raw(:,3));
+parameters(1,21) = 0;% corr(raw(:,2),raw(:,4));
+parameters(1,22) = 0;% corr(raw(:,3),raw(:,4)); returns NAN when var =0 
 
 q =  cov(raw(:,1),raw(:,2));
 parameters(1,23)= q(1,2);
@@ -44,10 +44,10 @@ parameters(1,30) = max(raw(:,5));
 parameters(1,31) = min(raw(:,5));
 parameters(1,32) = var(raw(:,5));
 
-parameters(1,33) =  corr(raw(:,5),raw(:,1));
-parameters(1,34) =  corr(raw(:,5),raw(:,2));
-parameters(1,35) =  corr(raw(:,5),raw(:,3));
-parameters(1,36) =  corr(raw(:,5),raw(:,4));
+parameters(1,33) =  0;%corr(raw(:,5),raw(:,1));
+parameters(1,34) =  0;%corr(raw(:,5),raw(:,2));
+parameters(1,35) =  0;%corr(raw(:,5),raw(:,3));
+parameters(1,36) =  0;%corr(raw(:,5),raw(:,4));
 
 q =  cov(raw(:,1),raw(:,5));
 parameters(1,37)= q(1,2);

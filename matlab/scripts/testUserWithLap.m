@@ -42,7 +42,7 @@ all_struct_bad.theo = Model_Group_Bad;
 filenames= {'violaris-golf';
             'violaris2-golf';};
         
-filenames={};       
+%filenames={};       
 
 numbers=[9 8 7 6 5 4 2 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0;
          5 4 3 2 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0;];
@@ -69,7 +69,7 @@ filenames= {
             'kotsios2203-golf';
            };
        
-filenames={}; 
+%filenames={}; 
 
 numbers=[5 4 3 2 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0;
          14 13 12 11 10 9 8 7 6 5 4 3 2 1 0 0 0 0 0 0 0 0 0 0;      
