@@ -1,4 +1,4 @@
-function [ angle_last ,angle_vector_consequtive,angle_cell,angle_sequences] = angles(direction_vectors,block)
+function [ angle_last ,angle_vector_consequtive,angle_cell,angle_sequences] = angles(direction_vectors,block,plotting)
 %TRACK_DIVIDER Find the angle between 2 cosecutive vectors
 % INPUT
 %   angle => a.b = |a|*|b|* cos x
@@ -16,6 +16,11 @@ if ~exist('block', 'var')
     block = 12;
 end
 
+
+if ~exist('plotting', 'var')
+    plotting = 'y' ;
+end
+
 %%Find all combinations of angles in the block
    z=0; 
   for y= 0:floor(block/2):length(direction_vectors)-block
@@ -31,7 +36,9 @@ end
   end   
     
   %%Weight Averaging the combination of angles
-  figure
+  if plotting=='y'
+    figure
+  end
   s=0;  
   for a=1:length(angle_cell)
     x = cell2mat(angle_cell{1,a});
@@ -42,29 +49,44 @@ end
     end
    s=s+1;     
    angle_sequences(s,:)=(newA);
+   if plotting=='y'
    %plot sequences
-   t= 1+(s-1)*6: length(newA)+(s-1)*6;
-   if mod(s,2)==0
-    plot(t,newA,'g'); 
-   else
-    plot(t,newA,'r'); 
-   end
-   hold on
+    t= 1+(s-1)*6: length(newA)+(s-1)*6;   
+    
+       if mod(s,2)==0
+        plot(t,newA,'g'); 
+       else
+        plot(t,newA,'r'); 
+       end
+       hold on
+    end
+   
   end
  
   %Last angle of block is the total result
-  angle_last = angle_sequences(:,block-1)';
-  plot(11:6:length(angle_sequences(:,block-1))*6+10,angle_sequences(:,block-1),'b');
-  title('Angles Sequences + last angle');
+  %angle_last = angle_sequences(:,block-1)';
+  %change to give weighted average of all
+  for g=1:size(angle_sequences,1)
+    angle_last(g) = weight_average(fliplr(angle_sequences(g,:)),block-1);
+  end
+  
+    if plotting=='y'
+      plot(11:6:length(angle_sequences(:,block-1))*6+10,angle_sequences(:,block-1),'b');
+      title('Angles Sequences + last angle');
+    end
+  
   
     for x=1:length(direction_vectors)-1
         dot_product = dot(direction_vectors(:,x), direction_vectors(:,x+1));
         magnitude = norm(direction_vectors(:,x)) * norm(direction_vectors(:,x+1));
         angle_vector_consequtive(x)=real(acos(dot_product/magnitude))* 180 / pi;
     end
-    figure    
-    plot(1:length(angle_vector_consequtive),angle_vector_consequtive);
-    title('Consequtive Angles');
+    
+    if plotting=='y'
+        figure    
+        plot(1:length(angle_vector_consequtive),angle_vector_consequtive);
+        title('Consequtive Angles');
+    end
     
 end
 

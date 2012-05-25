@@ -1,0 +1,6 @@
+what,kind,bundleId,bundleVersion,description,time
+stopped,bundle,org.python.pydev.django,2.4.0.2012020116,"org.python.pydev.django",1337632782808
+stopped,bundle,org.python.pydev.customizations,2.4.0.2012020116,"org.python.pydev.customizations",1337632782820
+stopped,bundle,org.python.pydev.debug,2.4.0.2012020116,"org.python.pydev.debug",1337632782821
+stopped,bundle,org.python.pydev.mylyn,0.3,"org.python.pydev.mylyn",1337632782822
+stopped,bundle,org.python.pydev.refactoring,2.4.0.2012020116,"org.python.pydev.refactoring",1337632782823

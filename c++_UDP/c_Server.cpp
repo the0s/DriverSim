@@ -20,7 +20,7 @@ void screen_out(RDashData echoBuffer){
     cout << "car " << echoBuffer.carName <<endl;
     cout << "GFORCE lat"<<echoBuffer.gforceLat<< "long"<<echoBuffer.gforceLon<<endl;
     cout << "Pos x "<<echoBuffer.pos.x<< "y "<<echoBuffer.pos.y<< " z "<< echoBuffer.pos.z<<endl;
-    cout <<echoBuffer.steering<< "  "<<echoBuffer.throttle<<"  "<<echoBuffer.brakes<<"  "<<echoBuffer.clutch<<"   "<<echoBuffer.handBrakes<<endl;
+    cout <<echoBuffer.steering<< "  "<<echoBuffer.throttle<<"  "<<echoBuffer.brakes<<"  "<<echoBuffer.clutch<<"  "<<echoBuffer.handBrakes<<endl;
     cout << "Acc x "<<echoBuffer.acc.x<< "y "<<echoBuffer.acc.y<< " z "<< echoBuffer.acc.z<<endl;
     cout<<"steering "<<echoBuffer.steering<<endl;
     cout<<endl;

@@ -88,7 +88,7 @@ for t=1:size(param,2)-1
         param(:,t)= param(:,t)/temp;
     end
 end
-cell2csv('test2.csv', num2cell(param));
+cell2csv('test_com12.csv', num2cell(param));
 
 end
     
