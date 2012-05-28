@@ -28,7 +28,7 @@ function udp_plotter_demo(lport)
   % Use timeout to not block forever, makes it possible to update resized window.
  p=1;
   try
-    while p<=1000,
+    while p<=100,
       % Wait/Read udp packet to reed buffer
       len=pnet(udp,'readpacket');
       if len>0,
@@ -36,10 +36,15 @@ function udp_plotter_demo(lport)
 	data=pnet(udp,'read',1000,'string');
 	figure(fg);
 	% .... and plot doubles in axis.
+    %hold on
     data = strsplit(';',data);
     p=p+1;
-	plot(str2double(data(1)),'*');
+    dataplot(1,p)= str2double(data(1));
+    %dataplot(2,p)= str2double(data(1));
+	
       end
+    if mod(p,  
+     plot(dataplot);
      drawnow;   
       
     end
