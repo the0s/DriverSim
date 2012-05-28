@@ -1,7 +1,7 @@
 %Manual Kalman ninja on position and acceleration
 
 clear all
-[A,check, speed, brakes,gas,clutch,gear,distance,time, position3d, acceleration3d,steering, gForceLat,gForceLong,handbrake,lapTime] = RacerToMatlab('lap2-golf1.txt');
+[A,check, speed, brakes,gas,clutch,gear,distance,time, position3d, acceleration3d,steering, gForceLat,gForceLong,handbrake,lapTime] = RacerToMatlab('kotsios-golf1.txt');
 
 
 %%Sampling faster than 0.1
@@ -24,8 +24,9 @@ p=1:6;
 dt = (time(2) - time(1)) / 1000;
 dtsqr =dt^2/2;
 %dtsqr = 0.1; %test
-%path(ps,1) = position3d(:,1);
-%velo(ps,1) = [0;0;0];
+ps=1:3;
+path(ps,1) = position3d(:,1);
+velo(ps,1) = [0;0;0];
 
 Q(1:3,1)= position3d(:,1);
 Q(4:6,1)= [0;0;0];
@@ -52,9 +53,9 @@ Ez = .0025;
 
 
 for x=2:size(time,2)
-    %[p,v] = update_carphysics( pos,vel, brakes(:,x) , gas(:,x), steering(:,x), dt, acceleration3d(:,x), gForceLat(:,x),gForceLong(:,x), speed(:,x));
-    %velo(ps,x) = velo(ps,x-1) + (dt * acceleration3d(:,x));
-    %path(ps,x) =  path(ps,x-1) + dt*velo(ps,x-1) + (((dt^2)/2) * acceleration3d(:,x)); 
+    %[p,v] = update_carphysics( pos,vel, brakes(:,x) , gas(:,x), steering(:,x), dt, acceleration3d(:,x), gForceLat(:,x),gForceLong(:,x), speed(:,x));   
+    velo(ps,x) = velo(ps,x-1) + (dt * acceleration3d(:,x));
+    path(ps,x) =  path(ps,x-1) + dt*velo(ps,x-1) + (((dt^2)/2) * acceleration3d(:,x)); 
     
     S(p,x) = A * S(p,x-1) + B * acceleration3d(:,x);
     
@@ -84,13 +85,13 @@ end
 
 
 figure 
-plot3(S(1,:),S(2,:),S(3,:));
+plot3(S(1,:),S(3,:),S(2,:));
 figure 
-plot3(Q(1,:),Q(2,:),Q(3,:));
+plot3(Q(1,:),Q(3,:),Q(2,:));
 hold on
-plot3(position3d(1,:),position3d(2,:),position3d(3,:),'r');    
+plot3(position3d(1,:),position3d(3,:),position3d(2,:),'r');    
 figure
 plot(magic');
-%figure 
-%plot3(velo(1,:),velo(2,:),velo(3,:));
+figure 
+plot3(velo(1,:),velo(2,:),velo(3,:));
 

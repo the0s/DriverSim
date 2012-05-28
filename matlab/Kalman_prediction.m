@@ -3,7 +3,7 @@ function [ prediction ] = Kalman_prediction( observed, measured, sampling_time )
 % Observed state of position and acceleration
 % measured state of position
 % the sampling time of samples taken
-
+time = sampling_time;
 
 %%Sampling faster than 0.1
     Optimal_sampling_rate = 0.01;
@@ -16,14 +16,16 @@ function [ prediction ] = Kalman_prediction( observed, measured, sampling_time )
         samples_to_overlap = samples;
         [position3d,variancePOS]=overlap_average(position3d,samples_to_average,samples_to_overlap);
         [acceleration3d,varianceACC]=overlap_average(acceleration3d,samples_to_average,samples_to_overlap);
-        [time,varianceTIME]=overlap_average(time,samples_to_average,samples_to_overlap);
+        [time,varianceTIME]=overlap_average(sampling_time,samples_to_average,samples_to_overlap);
     end  
 
 predic_var = [];
 p=1:6;
 %ps=1:3;
-dt = sampling_time;
+%dt = sampling_time;
 dtsqr =dt^2/2;
+position3d= observed(1:3,:);
+acceleration3d= observed(4:6,:);
 
 Q(1:3,1)= position3d(:,1); %initial position
 Q(4:6,1)= [0;0;0]; % initial velocity
