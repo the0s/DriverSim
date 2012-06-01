@@ -3,6 +3,7 @@ function [ User_Cell, User_Cell_Bad ] = ModelCreation( User_Structure )
 %returns a cell with the angle before current and future with the user
 %inputs
 
+
 check = cell2mat(User_Structure.user_input(2,:));
 angless= User_Structure.anglesLap;
 
@@ -14,6 +15,7 @@ User_Cell_Bad= cell(1);
 %%add first and last --> if everything works !!!! 
 %TODO
 for x=2:size(User_Structure.user_input,2)-1
+
     if check(x-1)==0 && check(x)==0 && check(x+1)==0 && angless(x-1)>=0 && angless(x)>=0 && angless(x+1)>=0 
         p=p+1;
         User_Cell{1,p} = [angless(x-1) angless(x) angless(x+1)];
@@ -27,9 +29,10 @@ for x=2:size(User_Structure.user_input,2)-1
         User_Cell_Bad{2,q} = cell2mat(User_Structure.user_input(1,x));
         User_Cell_Bad{3,q} = [round(angless(x-1)) round(angless(x)) round(angless(x+1))];
         User_Cell_Bad{4,q} = User_Structure.pos{1,x};
-        
-        
-    end    
+               
+    end
+
+ 
 end
 end
 

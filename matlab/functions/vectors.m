@@ -1,4 +1,4 @@
-function [dir_vect, pos] = vectors(position3d,merge_no, plotting)
+function [dir_vect, pos] = vectors(position3d, merge_no, plotting)
 %VECTORS create vectors on 3d consequtive points inserted
 %   position3d -> 3xm  matrix where m is the number of points
 %   merge_no -> number of points to merge (EVEN)

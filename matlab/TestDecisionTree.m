@@ -2,7 +2,8 @@
 clear all
 %load carsmall
 %load('paramAngle.mat')
-load('paramAngle2.mat')
+%load('paramAngle2.mat');
+parma=load('angle402020.csv');
 class={'violaris' 0;
        'theo' 1;
        'kotsios' 2;
@@ -25,7 +26,7 @@ end
 %# construct predicting attributes and target class
 vars = {'MPG' 'Cylinders' 'Horsepower' 'Model_Year'};
 %x = [MPG Cylinders Horsepower Model_Year];
-x= parma(2:size(parma,2),1:70);
+%x= parma(2:size(parma,1),1:70);
 x= parma(:,1:70);
 %y = strcat(Origin,{});
 y = strcat(y,{});
@@ -34,7 +35,7 @@ y = strcat(y,{});
 t = classregtree(x, y, 'method','classification',  ...
                  'prune','on');
              %'categorical', [2 4],
-view(t)
+%view(t)
 
 %# test
 yPredicted = eval(t, x);

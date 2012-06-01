@@ -1,10 +1,14 @@
-function [ indexa ] = user_structure(  filename, vectors_merge_no,angles_block_no, plotting )
+function [ indexa ] = user_structure(  filename, vectors_merge_no,angles_block_no, plotting, instance )
 %USER_STRUCTURE Creates a structure of the Track entered
 %  filename -> single track data for extrapolating results
 %   merge_no -> number of points to merge (EVEN)
 %   block -> number of direction_vectors to merge-overlap
 
-[A,check, speed, brakes,gas,clutch,gear,lapdistance,time, position3d, acceleration3d,steering, gForceLat,gForceLong,handbrake,lapTime] = RacerToMatlab(filename);
+    if ~exist('instance', 'var')
+        instance = 'n';
+    end
+    
+[A,check, speed, brakes,gas,clutch,gear,lapdistance,time, position3d, acceleration3d,steering, gForceLat,gForceLong,handbrake,lapTime] = RacerToMatlab(filename, instance);
 [direction_vectors pos] = vectors(position3d, vectors_merge_no,plotting);
 [angles_last ,angle_vector_consequtive,angle_cell,angle_sequences] = angles(direction_vectors,angles_block_no, plotting);
 

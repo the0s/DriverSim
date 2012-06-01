@@ -3,9 +3,18 @@
 %22/02/2012
 %Text file data:Speed,brakes,gas,clutch,gear,distance,time, x, y ,z, x-acc, y-acc,z-acc,steering
 
-function [A,check, speed, brakes,gas,clutch,gear,lapdistance,time, position3d, acceleration3d,steering, gForceLat,gForceLong,handbrake,lapTime] = RacerToMatlab(filename)
-     
+%if instance is 'y' then file name is already a matrix
+
+function [A,check, speed, brakes,gas,clutch,gear,lapdistance,time, position3d, acceleration3d,steering, gForceLat,gForceLong,handbrake,lapTime] = RacerToMatlab(filename, instance)
+    
+    if ~exist('instance', 'var')
+        instance = 'n';
+    end
+    if strcmp(instance,'n')
     A = loadRacerFile( filename );
+    else 
+    A= filename;
+    end
     
     check= A(1,:);
     speed = A(2,:);

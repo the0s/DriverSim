@@ -1,7 +1,7 @@
 %Manual Kalman ninja on position and acceleration
 
 clear all
-[A,check, speed, brakes,gas,clutch,gear,distance,time, position3d, acceleration3d,steering, gForceLat,gForceLong,handbrake,lapTime] = RacerToMatlab('kotsios-golf1.txt');
+[A,check, speed, brakes,gas,clutch,gear,distance,time, position3d, acceleration3d,steering, gForceLat,gForceLong,handbrake,lapTime] = RacerToMatlab('the0-golf1.txt');
 
 
 %%Sampling faster than 0.1

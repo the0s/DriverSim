@@ -11,7 +11,7 @@ function udp_plotter_demo(lport)
 % (C) 2002 Peter Rydesäter
   
   % Add default argument
-  if nargin<1, lport=7011; end
+  if nargin<1, lport=7012; end
   % Write help message
   disp ' ';
   disp 'To send packages to be plotted use e.g.';
@@ -28,7 +28,7 @@ function udp_plotter_demo(lport)
   % Use timeout to not block forever, makes it possible to update resized window.
  p=1;
   try
-    while p<=100000,
+    while p=<1001,
       % Wait/Read udp packet to reed buffer
       len=pnet(udp,'readpacket');
       if len>0,
@@ -38,50 +38,59 @@ function udp_plotter_demo(lport)
 	% .... and plot doubles in axis.
     %hold on
     data = strsplit(';',data);
-    p=p+1;
+    
     %Text file data:Speed,brakes,gas,clutch,gear,distance,time, x, y ,z, x-acc, y-acc,z-acc,steering
-    dataplot(1,p)= str2double(data(1));
-    dataplot(2,p)= str2double(data(2));
-    dataplot(3,p)= str2double(data(3));
-    dataplot(4,p)= str2double(data(4));
-    dataplot(5,p)= str2double(data(6));
-    dataplot(6,p)= str2double(data(14));
-    %dataplot(2,p)= str2double(data(1));
-	
+    for a=1:size(data,2)
+        dataplot(a,p)= str2double(data(a));
+    end
+    p=p+1;
+    
       end
-    if mod(p,10) == 0 
-        subplot(2,3,1)
+      
+      if mod(p,100) == 10010
+        subplot(3,3,1)
         plot(dataplot(1,:));
         drawnow; 
-        subplot(2,3,2)
+        subplot(3,3,2)
         plot(dataplot(2,:));
         drawnow; 
-        subplot(2,3,3)
+        subplot(3,3,3)
         plot(dataplot(3,:));
         drawnow;  
-                subplot(2,3,4)
+                subplot(3,3,4)
         plot(dataplot(4,:));
         drawnow;  
-                subplot(2,3,5)
+                subplot(3,3,5)
         plot(dataplot(5,:));
         drawnow;  
-                subplot(2,3,6)
+                subplot(3,3,6)
         plot(dataplot(6,:));
         drawnow;  
+         subplot(3,3,7)
+        plot(dataplot(7,:));
+        drawnow;
+         subplot(3,3,8)
+        plot(dataplot(8,:));
+        drawnow;
+         subplot(3,3,9)
+        plot(dataplot(9:11,:)');
+        drawnow;
+        
         
     end 
     
-    if p==10000
-        p=5000;
-        dataplot(:,1:5000)= dataplot(:,5000:10000);
-        dataplot(:,5000:10000) = 0;
-    end
+    %if p==10000
+   %     p=5000;
+   %     dataplot(:,1:5000)= dataplot(:,5000:10000);
+   %     dataplot(:,5000:10000) = 0;
+   % end
      
     end
   catch err
      pnet(udp,'close');
      delete(fg); 
      display(err)
+    % udp_plotter_demo;
   end
   % On break or error close udpconnection and figure window.
   pnet(udp,'close');

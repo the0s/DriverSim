@@ -5,7 +5,7 @@ from server import *
 from UDPtoRabbitmq import *
 
 if __name__ == "__main__":
-	UDP_IP = "192.168.1.98"
+	UDP_IP = "192.168.1.65"
 	UDP_PORT= 7011
 	
 

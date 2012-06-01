@@ -88,11 +88,18 @@ parameters(1,67)= var(conv(raw(:,3),raw(:,1)));
 parameters(1,68)= var(conv(raw(:,2),raw(:,2)));
 parameters(1,69)= var(conv(raw(:,2),raw(:,1)));
 parameters(1,70)= var(conv(raw(:,1),raw(:,1)));
-for x = 1:70
+
+for x = 1:size(parameters,2)
     if isnan(parameters(1,x)) == 1
         parameters(1,x)=0;
     end
 end
-parameters(1,71) = class;
+
+if exist('class', 'var')
+    parameters(1,71) = class;
+end
+
+
+
 end
 
