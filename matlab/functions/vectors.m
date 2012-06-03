@@ -29,7 +29,7 @@ for f=1:n-1;
 end
 
 if plotting=='y'
-    plot3(x,y,z,'r');
+    plot3(x,z,y,'r');
     hold on
 end
 
@@ -39,7 +39,7 @@ end
 if plotting=='y'
     a=0;
     for f=1:length(s);
-        if a<=12
+        if a<=0%12??
             plot_vector(s(:,f),pos(:,f),'g');
             a=a+1;
         else
@@ -48,7 +48,7 @@ if plotting=='y'
         end
         hold on
 
-        if a==24
+        if a==2%24???
             a=0;
         end
 

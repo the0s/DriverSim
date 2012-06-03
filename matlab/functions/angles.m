@@ -1,9 +1,10 @@
 function [ angle_last ,angle_vector_consequtive,angle_cell,angle_sequences] = angles(direction_vectors,block,plotting)
-%TRACK_DIVIDER Find the angle between 2 cosecutive vectors
+%ANGLES Find the angle in a block of direction vectors using weighted
+%average
+%   DOT PRODUCT --> angle => a.b = |a|*|b|* cos x
 % INPUT
-%   angle => a.b = |a|*|b|* cos x
-% direction_vectors-> series of 3xm direction vectors
-% block -> number of direction_vectors to merge-overlap
+% direction_vectors --> series of 3xm direction vectors
+% block --> number of direction_vectors to merge-overlap
 % OUTPUT
 % angle_last -> resulting angle of the block of road
 % angle_vector_consequtive -> angles between the direction vectors in  sequence in the
@@ -16,7 +17,6 @@ if ~exist('block', 'var')
     block = 12;
 end
 
-
 if ~exist('plotting', 'var')
     plotting = 'y' ;
 end
@@ -28,7 +28,11 @@ end
           for j =1:block-(k-y)
             dot_product1 = dot(direction_vectors(:,k), direction_vectors(:,k+j));
             magnitude1 = norm(direction_vectors(:,k)) * norm(direction_vectors(:,k+j));
-            angle_result(k-y,j+k-y)=real(acos(dot_product1/magnitude1))* 180 / pi;           
+            check90 = real(acos(dot_product1/magnitude1))* 180 / pi; 
+            if check90 > 90
+                check90 = 180 - check90;
+            end
+            angle_result(k-y,j+k-y)= check90;          
           end
       end
       z=z+1;     

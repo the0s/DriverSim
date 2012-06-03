@@ -16,9 +16,9 @@ for f=1:size(vectors,2);
     i = points(1,f) + g*(vectors(1,f)); 
     j = points(2,f) + g*(vectors(2,f));
     k = points(3,f) + g*(vectors(3,f));
-    plot3(i,j,k,colour);
+    plot3(i,k,j,colour);
     hold on
-    plot3(points(1,f),points(2,f),points(3,f),colour2);
+    plot3(points(1,f),points(3,f),points(2,f),colour2);
     hold on
 end
 end
