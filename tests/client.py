@@ -1,7 +1,7 @@
 import socket
 import pickle
 UDP_IP="127.0.0.1"
-UDP_PORT=7011
+UDP_PORT=7012
 MESSAGE="Testing Database"
 print "UDP target IP:", UDP_IP
 print "UDP target port:", UDP_PORT

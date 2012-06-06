@@ -1,0 +1,141 @@
+max_iter=20;
+mixtures=1;
+load('C:\Users\The0s\Desktop\Project Files\Project\DriverSim\matlab\data\HMMnewAll.mat')
+
+%c loops over sequences
+%a loops over coefficients
+%b loops in sequence
+User_Model_Sequences=[];
+User_Model_Sequences = all_struct.theo;
+for c=1:size(User_Model_Sequences,1)
+    for a=1:size(User_Model_Sequences{c,1}{1,1},2)
+        for b=1:size(User_Model_Sequences{c,1},2)  
+ data(a,b,c) = User_Model_Sequences{c,1}{1,b}(:,a);
+        end
+    end
+end
+tdata= data;
+  O =size(User_Model_Sequences{1,1}{1,1},2); %Number of coefficients in a vector 
+  M = mixtures;          %Number of mixtures 
+  Q = 10;          %Number of states 
+  %T = 132;         %Number of vectors in a sequence 
+  %nex = 37;        %Number of sequences 
+  cov_type = 'full';
+
+%data = reshape(data, [O T nex]);
+
+% initial guess of parameters
+prior0 = normalise(rand(Q,1));
+transmat0 = mk_stochastic(rand(Q,Q));
+
+  [mu0, Sigma0] = mixgauss_init(Q*M, data, cov_type);
+  mu0 = reshape(mu0, [O Q M]);
+  Sigma0 = reshape(Sigma0, [O O Q M]);
+  mixmat0 = mk_stochastic(rand(Q,M));
+
+
+[tLL, tprior1, ttransmat1, tmu1, tSigma1, tmixmat1] = ...
+    mhmm_em(data, prior0, transmat0, mu0, Sigma0, mixmat0, 'max_iter', max_iter);
+
+
+tloglik = mhmm_logprob(data(:,10:40,3), tprior1, ttransmat1, tmu1, tSigma1, tmixmat1);
+
+%%%%%%
+%c loops over sequences
+%a loops over coefficients
+%b loops in sequence
+data=[];
+User_Model_Sequences=[];
+User_Model_Sequences = all_struct.violaris;
+for c=1:size(User_Model_Sequences,1)
+    for a=1:size(User_Model_Sequences{c,1}{1,1},2)
+        for b=1:size(User_Model_Sequences{c,1},2)  
+ data(a,b,c) = User_Model_Sequences{c,1}{1,b}(:,a);
+        end
+    end
+end
+vdata=data;
+  O =size(User_Model_Sequences{1,1}{1,1},2); %Number of coefficients in a vector 
+  M = mixtures;          %Number of mixtures 
+  Q = 10;          %Number of states 
+  %T = 132;         %Number of vectors in a sequence 
+  %nex = 37;        %Number of sequences 
+  cov_type = 'full';
+
+%data = reshape(data, [O T nex]);
+
+% initial guess of parameters
+prior0 = normalise(rand(Q,1));
+transmat0 = mk_stochastic(rand(Q,Q));
+
+  [mu0, Sigma0] = mixgauss_init(Q*M, data, cov_type);
+  mu0 = reshape(mu0, [O Q M]);
+  Sigma0 = reshape(Sigma0, [O O Q M]);
+  mixmat0 = mk_stochastic(rand(Q,M));
+
+
+[vLL, vprior1, vtransmat1, vmu1, vSigma1, vmixmat1] = ...
+    mhmm_em(data, prior0, transmat0, mu0, Sigma0, mixmat0, 'max_iter', max_iter);
+
+
+vloglik = mhmm_logprob(data(:,10:40,3), vprior1, vtransmat1,vmu1, vSigma1, vmixmat1);
+
+%%%%
+%c loops over sequences
+%a loops over coefficients
+%b loops in sequence
+data=[];
+User_Model_Sequences=[];
+User_Model_Sequences = all_struct.kotsios;
+for c=1:size(User_Model_Sequences,1)
+    for a=1:size(User_Model_Sequences{c,1}{1,1},2)
+        for b=1:size(User_Model_Sequences{c,1},2)  
+ data(a,b,c) = User_Model_Sequences{c,1}{1,b}(:,a);
+        end
+    end
+end
+kdata=data;
+  O =size(User_Model_Sequences{1,1}{1,1},2); %Number of coefficients in a vector 
+  M = mixtures;          %Number of mixtures 
+  Q = 10;          %Number of states 
+  %T = 132;         %Number of vectors in a sequence 
+  %nex = 37;        %Number of sequences 
+  cov_type = 'full';
+
+%data = reshape(data, [O T nex]);
+
+% initial guess of parameters
+prior0 = normalise(rand(Q,1));
+transmat0 = mk_stochastic(rand(Q,Q));
+
+  [mu0, Sigma0] = mixgauss_init(Q*M, data, cov_type);
+  mu0 = reshape(mu0, [O Q M]);
+  Sigma0 = reshape(Sigma0, [O O Q M]);
+  mixmat0 = mk_stochastic(rand(Q,M));
+
+
+[kLL, kprior1, ktransmat1, kmu1, kSigma1, kmixmat1] = ...
+    mhmm_em(data, prior0, transmat0, mu0, Sigma0, mixmat0, 'max_iter', max_iter);
+
+
+kloglik = mhmm_logprob(data(:,10:40,3), kprior1, ktransmat1, kmu1, kSigma1, kmixmat1);
+
+
+data = tdata;
+tloglik = mhmm_logprob(data(:,1:50,3), tprior1, ttransmat1, tmu1, tSigma1, tmixmat1);
+kloglik = mhmm_logprob(data(:,1:50,3), kprior1, ktransmat1, kmu1, kSigma1, kmixmat1);
+vloglik = mhmm_logprob(data(:,1:50,3), vprior1, vtransmat1,vmu1, vSigma1, vmixmat1);
+
+theo1=[tloglik  kloglik  vloglik]  
+
+data = kdata;
+tloglik = mhmm_logprob(data(:,1:50,3), tprior1, ttransmat1, tmu1, tSigma1, tmixmat1);
+kloglik = mhmm_logprob(data(:,1:50,3), kprior1, ktransmat1, kmu1, kSigma1, kmixmat1);
+vloglik = mhmm_logprob(data(:,1:50,3), vprior1, vtransmat1,vmu1, vSigma1, vmixmat1);
+kotsios2= [tloglik  kloglik  vloglik] 
+
+data = vdata;
+tloglik = mhmm_logprob(data(:,1:50,3), tprior1, ttransmat1, tmu1, tSigma1, tmixmat1);
+kloglik = mhmm_logprob(data(:,1:50,3), kprior1, ktransmat1, kmu1, kSigma1, kmixmat1);
+vloglik = mhmm_logprob(data(:,1:50,3), vprior1, vtransmat1,vmu1, vSigma1, vmixmat1);
+viol3= [tloglik  kloglik  vloglik] 

@@ -49,6 +49,6 @@ tt = prune(t, 'level',2);
 %view(tt)
 
 %# predict a new unseen instance
-prediction = eval(tt, instance)
+prediction = eval(tt, instance);
 end
 
