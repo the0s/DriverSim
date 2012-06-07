@@ -108,17 +108,29 @@ parameters(1,83) = mean(ifft(log(abs(fft(raw(:,3))))));
 parameters(1,84) = mean(ifft(log(abs(fft(raw(:,4))))));
 parameters(1,85) = mean(ifft(log(abs(fft(raw(:,5))))));
 
-parameters(1,86)= mean(diff(ifft(log(abs(fft(raw(:,1)))))),1);
-parameters(1,87)= mean(diff(ifft(log(abs(fft(raw(:,2)))))),1);
-parameters(1,88)= mean(diff(ifft(log(abs(fft(raw(:,3)))))),1);
-parameters(1,89)= mean(diff(ifft(log(abs(fft(raw(:,4)))))),1);
-parameters(1,90)= mean(diff(ifft(log(abs(fft(raw(:,5)))))),1);
+parameters(1,86)= mean(diff(ifft(log(abs(fft(raw(:,1))))),1));
+parameters(1,87)= mean(diff(ifft(log(abs(fft(raw(:,2))))),1));
+parameters(1,88)= mean(diff(ifft(log(abs(fft(raw(:,3))))),1));
+parameters(1,89)= mean(diff(ifft(log(abs(fft(raw(:,4))))),1));
+parameters(1,90)= mean(diff(ifft(log(abs(fft(raw(:,5))))),1));
 
-parameters(1,91)= mean(diff(ifft(log(abs(fft(raw(:,1)))))),2);
-parameters(1,92)= mean(diff(ifft(log(abs(fft(raw(:,2)))))),2);
-parameters(1,93)= mean(diff(ifft(log(abs(fft(raw(:,3)))))),2);
-parameters(1,94)= mean(diff(ifft(log(abs(fft(raw(:,4)))))),2);
-parameters(1,95)= mean(diff(ifft(log(abs(fft(raw(:,5)))))),2);
+parameters(1,91)= mean(diff(ifft(log(abs(fft(raw(:,1))))),2));
+parameters(1,92)= mean(diff(ifft(log(abs(fft(raw(:,2))))),2));
+parameters(1,93)= mean(diff(ifft(log(abs(fft(raw(:,3))))),2));
+parameters(1,94)= mean(diff(ifft(log(abs(fft(raw(:,4))))),2));
+parameters(1,95)= mean(diff(ifft(log(abs(fft(raw(:,5))))),2));
+
+parameters(1,96) = kurtosis(raw(:,1));
+parameters(1,97) = kurtosis(raw(:,2));
+parameters(1,98) = kurtosis(raw(:,3));
+parameters(1,99) = kurtosis(raw(:,4));
+
+parameters(1,100) = skewness(raw(:,1));
+parameters(1,101) = skewness(raw(:,2));
+parameters(1,102) = skewness(raw(:,3));
+parameters(1,103) = skewness(raw(:,4));
+
+
 
 for x = 1:size(parameters,2)
     if isnan(parameters(1,x)) == 1
@@ -130,7 +142,7 @@ for x = 1:size(parameters,2)
 end
 
 if exist('class', 'var')
-    parameters(1,96) = class;
+    parameters(1,size(parameters,2)+1) = class;
 end
 
 

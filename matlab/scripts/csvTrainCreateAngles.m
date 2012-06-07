@@ -97,12 +97,12 @@ class={'violaris' 0;
  end
     
 
-for t=1:size(param,2)-1
-    temp = max(abs(param(:,t)));
-    if temp ~=0
-        param(:,t)= param(:,t)/temp;
-    end
-end
+%for t=1:size(param,2)-1
+%    temp = max(abs(param(:,t)));
+%    if temp ~=0
+%        param(:,t)= param(:,t)/temp;
+%    end
+%end
 cell2csv('all_angle464040.csv', num2cell(param));
 
 end

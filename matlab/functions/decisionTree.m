@@ -1,6 +1,6 @@
 function [ prediction ] = decisionTree( angle_var, type, instance )
 %DESICIONTREE Enter angle to get training data and instance to get
-%prediction
+%prediction with a decision tree
 %   Detailed explanation goes here
 
 %# load data
@@ -22,14 +22,13 @@ className = {'viol'; 'theo'; 'kots'; 'haro';'aadi'; 'yian'; 'loiz'; 'xris'};
    
 for d=1:size(parma,1)
     for p=1:size(classNO,1)
-        if parma(d,71) == classNO(p,1)
+        if parma(d,size(parma,2)) == classNO(p,1)
             y(d,1) = className(p); 
         end
     end
 end
 %# construct predicting attributes and target class
-
-x= parma(:,1:70);
+x= parma(:,1:size(parma,2)-1);
 y = strcat(y,{});
 
 %# train classification decision tree
@@ -37,6 +36,8 @@ t = classregtree(x, y, 'method','classification',  ...
                  'prune','on');
              %'categorical', [2 4],
 %view(t)
+
+
 
 %# test
 yPredicted = eval(t, x);
