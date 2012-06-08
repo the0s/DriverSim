@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of playwithBNT</title>
+  <meta name="keywords" content="playwithBNT">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">other</a> &gt; playwithBNT.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for other&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>playwithBNT
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001  load <span class="string">'all.txt'</span>
+0002  dag = [ 0 1 1 ; 0 0 1 ; 0 0 0 ];
+0003  discrete_nodes = [1 2];
+0004  nodes = [1 : 3];
+0005  node_sizes=[ 2 2 19];
+0006  bnet = mk_bnet(dag, node_sizes, <span class="string">'discrete'</span>, discrete_nodes);
+0007  bnet.CPD{1} = tabular_CPD(bnet,1);
+0008  bnet.CPD{2} = tabular_CPD(bnet,2);
+0009  bnet.CPD{3} = gaussian_CPD(bnet, 3);
+0010  <span class="comment">%bnet.CPD{3} = gaussian_CPD(bnet, 3,'cov_type','diag');</span>
+0011  walkingX=all(1:5000,:);
+0012  runningX=all(5001:10000,:);
+0013  trainingX = walkingX(1:100,:);
+0014  trainingX(101:200,:)=runningX(1:100,:);
+0015  trainingC(1:100) = 1;   <span class="comment">%% Class 1 is walking</span>
+0016  trainingC(101:200) = 2; <span class="comment">%% Class 2 is running</span>
+0017  testX(1:20,:) = walkingX(101:120,:);   <span class="comment">%% The first 20 are walking</span>
+0018  testX(21:40,:) = runningX(101:120,:);  <span class="comment">%% The next 20 are running</span>
+0019  training= cell(3,length(trainingX));
+0020  training(3,:) = num2cell(trainingX',1);
+0021  training(1,:) = num2cell(trainingC,1);
+0022  engine = jtree_inf_engine(bnet);
+0023  maxiter=10;     <span class="comment">%% The number of iterations of EM (max)</span>
+0024  epsilon=1e-100; <span class="comment">%% A very small stopping criterion</span>
+0025  [bnet2, ll, engine2] = learn_params_em(engine,training,maxiter,epsilon);
+0026  class0= cell(3,1); <span class="comment">%% Create an empty cell array for observations</span>
+0027  class1 = class0;
+0028  class2 = class0;
+0029  class1{1} = 1;     <span class="comment">%% The class node is observed to be walking</span>
+0030  class2{1} = 2;     <span class="comment">%% The class node is observed to be running</span>
+0031  <span class="keyword">for</span> i=1:100
+0032    sample1=sample_bnet(bnet2,<span class="string">'evidence'</span>,class1);
+0033    sample2=sample_bnet(bnet2,<span class="string">'evidence'</span>,class2);
+0034    modelX(i,:)=sample1{3}'  ;
+0035    modelX(i+100,:)=sample2{3}';
+0036  <span class="keyword">end</span>
+0037  figure
+0038  subplot(2,1,1);
+0039  plot(trainingX);
+0040  subplot(2,1,2);
+0041  plot(modelX);
+0042  evidence=class0;   <span class="comment">%% Start out with nothing observed</span>
+0043  <span class="keyword">for</span> i=1:40
+0044    evidence{3}=testX(i,:)';
+0045    [engine3, ll] = enter_evidence(engine2,evidence);
+0046    marg = marginal_nodes(engine3,1);
+0047    p(i,:)=marg.T';
+0048  <span class="keyword">end</span>
+0049  figure;
+0050  subplot(2,1,1);
+0051  plot(testX);
+0052  hold
+0053  plot(p(:,1));  <span class="comment">%% Plot the output of the walking classifier</span>
+0054  subplot(2,1,2);
+0055  plot(testX);
+0056  hold
+0057  plot(p(:,2));  <span class="comment">%% Plot the output of the running classifier</span></pre></div>
+<hr><address>Generated on Thu 07-Jun-2012 12:09:53 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

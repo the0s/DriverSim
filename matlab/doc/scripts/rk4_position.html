@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of rk4_position</title>
+  <meta name="keywords" content="rk4_position">
+  <meta name="description" content="%The RK4 algorithm on finding next state using motion of physics formulae">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">scripts</a> &gt; rk4_position.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for scripts&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>rk4_position
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>%The RK4 algorithm on finding next state using motion of physics formulae</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment">%The RK4 algorithm on finding next state using motion of physics formulae
+ Result are same as Euler because acceleration is assumed to be constant
+ over the sampling time</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <span class="comment">%%The RK4 algorithm on finding next state using motion of physics formulae</span>
+0002 <span class="comment">% Result are same as Euler because acceleration is assumed to be constant</span>
+0003 <span class="comment">% over the sampling time</span>
+0004 
+0005 clear all
+0006 [A,check, speed, brakes,gas,clutch,gear,distance,time, position3d, acceleration3d,steering, gForceLat,gForceLong,handbrake,lapTime] = RacerToMatlab(<span class="string">'lap2-golf1.txt'</span>);
+0007 
+0008 
+0009 <span class="comment">%%Sampling faster than 0.1</span>
+0010     Optimal_sampling_rate = 0.01;
+0011     dt = ((time(11)-time(1))/10)/1000;
+0012     samples= round(Optimal_sampling_rate/dt);
+0013     
+0014     
+0015     <span class="keyword">if</span> samples&gt;1
+0016         samples_to_average = 2*samples;
+0017         samples_to_overlap = samples;
+0018         [position3d,variancePOS]=overlap_average(position3d,samples_to_average,samples_to_overlap);
+0019         [acceleration3d,varianceACC]=overlap_average(acceleration3d,samples_to_average,samples_to_overlap);
+0020         [time,varianceTIME]=overlap_average(time,samples_to_average,samples_to_overlap);
+0021     <span class="keyword">end</span>  
+0022     
+0023     ps=1:3;
+0024     dt = (time(2) - time(1)) / 1000;
+0025     dtsqr =dt^2/2;
+0026     pos(ps,1) = position3d(:,1);
+0027     velo(ps,1) = [0;0;0];
+0028     
+0029     <span class="comment">%velEqu = 'velo + acc * dt';</span>
+0030     <span class="comment">%velEuler = inline(velEqu)</span>
+0031     <span class="comment">%Equation= 'pos + velo * dt + 0.5 * dtsqr * acc';</span>
+0032     <span class="comment">%Equation_position = 'velocity_initial + acceleration * dt';</span>
+0033     <span class="comment">%eulerEq= inline(Equation)</span>
+0034     <span class="keyword">for</span> x=2:size(time,2)-10
+0035         dvdt = acceleration3d(ps,x-1);
+0036         velo(ps,x) = velo(ps,x-1) + dvdt * dt;  
+0037         
+0038         pk1 = velo(ps,x);
+0039         pk2 = velo(ps,x) + dvdt * dt * 0.5;
+0040         pk3 = velo(ps,x) + dvdt * dt * 0.5;
+0041         pk4 = velo(ps,x) + dvdt * dt;
+0042         dpdt = (1/6) * (pk1+ 2*pk2 + 2*pk3 + pk4);
+0043         
+0044         pos(ps,x)  = pos(ps,x-1) + dpdt * dt + acceleration3d(ps,x)*dtsqr;
+0045                
+0046         <span class="comment">%pos(ps,x) = eulerEq(acceleration3d(ps,x), dt, dtsqr,  pos(ps,x-1),velo(ps,x-1));</span>
+0047     <span class="keyword">end</span>
+0048     
+0049     plot3(pos(1,:),pos(3,:),pos(2,:));
+0050     hold on
+0051     plot3(position3d(1,:),position3d(3,:),position3d(2,:),<span class="string">'r'</span>); 
+0052     figure
+0053     plot(pos(1,:),pos(3,:));
+0054     hold on
+0055     plot(position3d(1,:),position3d(3,:),<span class="string">'r'</span>);</pre></div>
+<hr><address>Generated on Thu 07-Jun-2012 12:09:53 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

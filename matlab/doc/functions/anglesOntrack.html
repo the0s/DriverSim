@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of anglesOntrack</title>
+  <meta name="keywords" content="anglesOntrack">
+  <meta name="description" content="ANGLESONTRACK split track into angles and their direction vectors">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">functions</a> &gt; anglesOntrack.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for functions&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>anglesOntrack
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>ANGLESONTRACK split track into angles and their direction vectors</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function [ indexa ] = anglesOntrack( angles, direction_vectors, position3d ,pos, vectors_merge_no,angles_block_no,plotting) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment">ANGLESONTRACK split track into angles and their direction vectors
+   Detailed explanation goes here</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="angles.html" class="code" title="function [ angle_last ,angle_vector_consequtive,angle_cell,angle_sequences] = angles(direction_vectors,block,plotting)">angles</a>	ANGLES Find the angle in a block of direction vectors using weighted</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="lap_structure.html" class="code" title="function [ indexa ] = lap_structure( filename, vectors_merge_no,angles_block_no )">lap_structure</a>	LAP_STUCTURE Creates a structure of the Track entered</li><li><a href="user_structure.html" class="code" title="function [ indexa ] = user_structure(  filename, vectors_merge_no,angles_block_no, plotting, instance )">user_structure</a>	USER_STRUCTURE Creates a structure of the Track entered</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [ indexa ] = anglesOntrack( angles, direction_vectors, position3d ,pos, vectors_merge_no,angles_block_no,plotting)</a>
+0002 <span class="comment">%ANGLESONTRACK split track into angles and their direction vectors</span>
+0003 <span class="comment">%   Detailed explanation goes here</span>
+0004 
+0005 <span class="keyword">if</span> ~exist(<span class="string">'plotting'</span>, <span class="string">'var'</span>)
+0006     plotting = <span class="string">'y'</span>;
+0007 <span class="keyword">end</span>
+0008 
+0009 block_vect=floor(angles_block_no/2);
+0010 block_pos = floor(vectors_merge_no/2) * block_vect;
+0011 
+0012 <span class="comment">%for x=1:length(angles)</span>
+0013 <span class="comment">%indexa{1,x} = angles(x);</span>
+0014 <span class="comment">%end</span>
+0015 <span class="comment">%indexa{1}.angles= angles</span>
+0016 
+0017 z=1;
+0018 <span class="keyword">for</span> x=block_vect:block_vect:length(direction_vectors)-block_vect    
+0019 dir_vec{1,z} = direction_vectors(:,x-(block_vect-1):x+block_vect);
+0020 posi{1,z} = pos(:,x-(block_vect-1):x+block_vect);
+0021 z=z+1;
+0022 <span class="keyword">end</span>
+0023 
+0024 z=1;
+0025 <span class="keyword">for</span> x=block_pos:block_pos:length(position3d)-block_pos <span class="comment">%SASTOOO ??</span>
+0026 pos3d{1,z} = position3d(:,x-(block_pos-1):x+block_pos);    
+0027 max_min{1,z} = [min(position3d(1, x-(block_pos-1):x+block_pos)) max(position3d(1, x-(block_pos-1):x+block_pos));
+0028                min(position3d(2, x-(block_pos-1):x+block_pos)) max(position3d(2, x-(block_pos-1):x+block_pos));
+0029                min(position3d(3, x-(block_pos-1):x+block_pos)) max(position3d(3, x-(block_pos-1):x+block_pos))
+0030               ]; 
+0031           
+0032 mean_var{1,z} = [mean(position3d(1, x-(block_pos-1):x+block_pos)) var(position3d(1, x-(block_pos-1):x+block_pos));
+0033                mean(position3d(2, x-(block_pos-1):x+block_pos)) var(position3d(2, x-(block_pos-1):x+block_pos));
+0034                mean(position3d(3, x-(block_pos-1):x+block_pos)) var(position3d(3, x-(block_pos-1):x+block_pos))
+0035               ];           
+0036 
+0037 <span class="comment">%subplot(2,1,1)</span>
+0038 <span class="comment">%plot_vector(indexa{2,z},indexa{4,z});</span>
+0039 <span class="comment">%hold on</span>
+0040 <span class="comment">%plot3(position3d(1,x-(block_pos-1):x+block_pos),position3d(2,x-(block_pos-1):x+block_pos),position3d(3,x-(block_pos-1):x+block_pos),'b');</span>
+0041 <span class="comment">%pause</span>
+0042 <span class="comment">%hold off</span>
+0043 z=z+1;
+0044 <span class="keyword">end</span>
+0045 indexa=struct(<span class="string">'angles'</span>,{<a href="angles.html" class="code" title="function [ angle_last ,angle_vector_consequtive,angle_cell,angle_sequences] = angles(direction_vectors,block,plotting)">angles</a>},<span class="string">'direction_vectors'</span>,{dir_vec},<span class="string">'position3d'</span>,{pos3d},<span class="string">'pos'</span>,{posi},<span class="string">'max_min'</span>,{max_min}, <span class="string">'mean_var'</span>,{mean_var});
+0046 
+0047 <span class="keyword">if</span> plotting==<span class="string">'y'</span>
+0048     figure;
+0049     <span class="keyword">for</span> g=1:1:size(posi,2)
+0050         plot(posi{1,g}(1,:),posi{1,g}(3,:))
+0051         text(posi{1,g}(1,size(posi{1,g},2)),posi{1,g}(3,size(posi{1,g},2)),num2str(round(<a href="angles.html" class="code" title="function [ angle_last ,angle_vector_consequtive,angle_cell,angle_sequences] = angles(direction_vectors,block,plotting)">angles</a>(1,g))),<span class="keyword">...</span>
+0052         <span class="string">'VerticalAlignment'</span>,<span class="string">'top'</span>,<span class="keyword">...</span>
+0053         <span class="string">'HorizontalAlignment'</span>,<span class="string">'left'</span>,<span class="keyword">...</span>
+0054         <span class="string">'color'</span>,<span class="string">'red'</span>,<span class="keyword">...</span>
+0055         <span class="string">'FontSize'</span>,5)
+0056         text(posi{1,g}(1,1),posi{1,g}(3,1),num2str(round(<a href="angles.html" class="code" title="function [ angle_last ,angle_vector_consequtive,angle_cell,angle_sequences] = angles(direction_vectors,block,plotting)">angles</a>(1,g))),<span class="keyword">...</span>
+0057         <span class="string">'VerticalAlignment'</span>,<span class="string">'bottom'</span>,<span class="keyword">...</span>
+0058         <span class="string">'HorizontalAlignment'</span>,<span class="string">'right'</span>,<span class="keyword">...</span>
+0059         <span class="string">'FontSize'</span>,8)
+0060         hold on
+0061     <span class="keyword">end</span>
+0062 <span class="keyword">end</span>
+0063 
+0064 <span class="keyword">end</span>
+0065</pre></div>
+<hr><address>Generated on Thu 07-Jun-2012 12:09:53 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

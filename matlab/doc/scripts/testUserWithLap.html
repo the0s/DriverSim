@@ -1,0 +1,293 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of testUserWithLap</title>
+  <meta name="keywords" content="testUserWithLap">
+  <meta name="description" content="%provides plots">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">scripts</a> &gt; testUserWithLap.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for scripts&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>testUserWithLap
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>%provides plots</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment">%provides plots</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <span class="comment">%%provides plots</span>
+0002 plotting = <span class="string">'n'</span>;
+0003 all_struct=struct(<span class="string">'violaris'</span>,[],<span class="string">'theo'</span>,[],<span class="string">'kotsios'</span>,[],<span class="string">'harold'</span>,[],<span class="string">'aadil'</span>,[],<span class="string">'yiannis'</span>,[],<span class="string">'loizos'</span>,[],<span class="string">'xristos'</span>,[]);
+0004 all_struct_bad=struct(<span class="string">'violaris'</span>,[],<span class="string">'theo'</span>,[],<span class="string">'kotsios'</span>,[],<span class="string">'harold'</span>,[],<span class="string">'aadil'</span>,[],<span class="string">'yiannis'</span>,[],<span class="string">'loizos'</span>,[],<span class="string">'xristos'</span>,[]);
+0005 [ Indexa ] = lap_structure( <span class="string">'lap2-golf1.txt'</span>, 60,18);
+0006  
+0007  filenames= { <span class="string">'theo-last-golf'</span>;
+0008             <span class="string">'theo-golf'</span>;
+0009             <span class="string">'the0-golf'</span>;
+0010             <span class="string">'the0-thu2-golf'</span>;
+0011             <span class="string">'theo-thur-golf'</span>;
+0012             <span class="string">'theo2203-2golf'</span>;
+0013             <span class="string">'theo2203-golf'</span>;
+0014             };
+0015  numbers=[4 3 2 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0;
+0016          9 8 7 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0;
+0017          1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0;
+0018          5 4 3 2 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0;
+0019          20 19 17 8 7 6 5 4 3 2 1 0 0 0 0 0 0 0 0 0 0 0 0 0;
+0020          7 6 5 4 3 2 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0;
+0021          6 5 4 3 2 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0;
+0022          ];
+0023      
+0024  Model_Group=cell(0); 
+0025  Model_Group_Bad=cell(0);
+0026  <span class="keyword">for</span> h=1:size(filenames,1)
+0027    <span class="keyword">for</span> k=1:size(numbers,2)
+0028        <span class="keyword">if</span> numbers(h,k) ~= 0
+0029            name = strcat(filenames{h}, num2str(numbers(h,k)), <span class="string">'.txt'</span>)
+0030            
+0031            [ Indexa2 ] = user_structure( name, 20,12,plotting);
+0032            [Indexa_new] = assing_angles_using_means(Indexa,Indexa2,plotting);
+0033            [User_Cell User_Cell_Bad] = ModelCreation(Indexa_new);
+0034            Model_Group = ModelGroupCreation(User_Cell,Model_Group);
+0035            Model_Group_Bad = ModelGroupCreation(User_Cell_Bad,Model_Group_Bad); <span class="comment">%take the values user got out of the road</span>
+0036         <span class="keyword">end</span>
+0037    <span class="keyword">end</span>
+0038  <span class="keyword">end</span>
+0039 all_struct.theo = Model_Group; 
+0040 all_struct_bad.theo = Model_Group_Bad;  
+0041 
+0042 filenames= {<span class="string">'violaris-golf'</span>;
+0043             <span class="string">'violaris2-golf'</span>;};
+0044         
+0045 <span class="comment">%filenames={};</span>
+0046 
+0047 numbers=[9 8 7 6 5 4 2 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0;
+0048          5 4 3 2 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0;];
+0049  Model_Group=cell(0); 
+0050  Model_Group_Bad=cell(0);
+0051  <span class="keyword">for</span> h=1:size(filenames,1)
+0052    <span class="keyword">for</span> k=1:size(numbers,2)
+0053        <span class="keyword">if</span> numbers(h,k) ~= 0
+0054            name = strcat(filenames{h}, num2str(numbers(h,k)), <span class="string">'.txt'</span>)
+0055            
+0056            [ Indexa2 ] = user_structure( name, 20,12,plotting);
+0057            [Indexa_new] = assing_angles_using_means(Indexa,Indexa2,plotting);
+0058            [User_Cell User_Cell_Bad] = ModelCreation(Indexa_new);
+0059            Model_Group = ModelGroupCreation(User_Cell,Model_Group);
+0060            Model_Group_Bad = ModelGroupCreation(User_Cell_Bad,Model_Group_Bad); <span class="comment">%take the values user got out of the road</span>
+0061         <span class="keyword">end</span>
+0062    <span class="keyword">end</span>
+0063  <span class="keyword">end</span>
+0064 all_struct.violaris = Model_Group;      
+0065 all_struct_bad.violaris = Model_Group_Bad;
+0066 
+0067 filenames= {
+0068             <span class="string">'kotsios-golf'</span>;          
+0069             <span class="string">'kotsios2203-golf'</span>;
+0070            };
+0071        
+0072 <span class="comment">%filenames={};</span>
+0073 
+0074 numbers=[5 4 3 2 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0;
+0075          14 13 12 11 10 9 8 7 6 5 4 3 2 1 0 0 0 0 0 0 0 0 0 0;      
+0076          ];
+0077  Model_Group=cell(0); 
+0078  Model_Group_Bad=cell(0);
+0079  <span class="keyword">for</span> h=1:size(filenames,1)
+0080    <span class="keyword">for</span> k=1:size(numbers,2)
+0081        <span class="keyword">if</span> numbers(h,k) ~= 0
+0082            name = strcat(filenames{h}, num2str(numbers(h,k)), <span class="string">'.txt'</span>)
+0083            
+0084            [ Indexa2 ] = user_structure( name, 20,12,plotting);
+0085            [Indexa_new] = assing_angles_using_means(Indexa,Indexa2,plotting);
+0086            [User_Cell User_Cell_Bad] = ModelCreation(Indexa_new);
+0087            Model_Group = ModelGroupCreation(User_Cell,Model_Group);
+0088            Model_Group_Bad = ModelGroupCreation(User_Cell_Bad,Model_Group_Bad); <span class="comment">%take the values user got out of the road</span>
+0089         <span class="keyword">end</span>
+0090    <span class="keyword">end</span>
+0091  <span class="keyword">end</span>
+0092 all_struct.kotsios = Model_Group; 
+0093 all_struct_bad.kotsios = Model_Group_Bad; 
+0094 
+0095 
+0096 
+0097 
+0098 
+0099 
+0100 filenames= {
+0101             <span class="string">'harold-golf'</span>;          
+0102            };
+0103        
+0104 <span class="comment">%filenames={};</span>
+0105 
+0106 numbers=[6 5 4 3 2 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0;      
+0107          ];
+0108  Model_Group=cell(0); 
+0109  Model_Group_Bad=cell(0);
+0110  <span class="keyword">for</span> h=1:size(filenames,1)
+0111    <span class="keyword">for</span> k=1:size(numbers,2)
+0112        <span class="keyword">if</span> numbers(h,k) ~= 0
+0113            name = strcat(filenames{h}, num2str(numbers(h,k)), <span class="string">'.txt'</span>)
+0114            
+0115            [ Indexa2 ] = user_structure( name, 20,12,plotting);
+0116            [Indexa_new] = assing_angles_using_means(Indexa,Indexa2,plotting);
+0117            [User_Cell User_Cell_Bad] = ModelCreation(Indexa_new);
+0118            Model_Group = ModelGroupCreation(User_Cell,Model_Group);
+0119            Model_Group_Bad = ModelGroupCreation(User_Cell_Bad,Model_Group_Bad); <span class="comment">%take the values user got out of the road</span>
+0120         <span class="keyword">end</span>
+0121    <span class="keyword">end</span>
+0122  <span class="keyword">end</span>
+0123 all_struct.harold = Model_Group; 
+0124 all_struct_bad.harold = Model_Group_Bad; 
+0125 
+0126 
+0127 filenames= {
+0128             <span class="string">'aadil-golf'</span>;         
+0129            };
+0130        
+0131 <span class="comment">%filenames={};</span>
+0132 
+0133 numbers=[4 3 2 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0;     
+0134          ];
+0135  Model_Group=cell(0); 
+0136  Model_Group_Bad=cell(0);
+0137  <span class="keyword">for</span> h=1:size(filenames,1)
+0138    <span class="keyword">for</span> k=1:size(numbers,2)
+0139        <span class="keyword">if</span> numbers(h,k) ~= 0
+0140            name = strcat(filenames{h}, num2str(numbers(h,k)), <span class="string">'.txt'</span>)
+0141            
+0142            [ Indexa2 ] = user_structure( name, 20,12,plotting);
+0143            [Indexa_new] = assing_angles_using_means(Indexa,Indexa2,plotting);
+0144            [User_Cell User_Cell_Bad] = ModelCreation(Indexa_new);
+0145            Model_Group = ModelGroupCreation(User_Cell,Model_Group);
+0146            Model_Group_Bad = ModelGroupCreation(User_Cell_Bad,Model_Group_Bad); <span class="comment">%take the values user got out of the road</span>
+0147         <span class="keyword">end</span>
+0148    <span class="keyword">end</span>
+0149  <span class="keyword">end</span>
+0150 all_struct.aadil = Model_Group; 
+0151 all_struct_bad.aadil = Model_Group_Bad; 
+0152 
+0153 
+0154 
+0155 
+0156 filenames= {
+0157             <span class="string">'yiannis-golf'</span>;
+0158             <span class="string">'yiannis2-golf'</span>;         
+0159            };
+0160        
+0161 <span class="comment">%filenames={};</span>
+0162 
+0163 numbers=[2 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0;
+0164          1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0;    
+0165          ];
+0166  Model_Group=cell(0); 
+0167  Model_Group_Bad=cell(0);
+0168  <span class="keyword">for</span> h=1:size(filenames,1)
+0169    <span class="keyword">for</span> k=1:size(numbers,2)
+0170        <span class="keyword">if</span> numbers(h,k) ~= 0
+0171            name = strcat(filenames{h}, num2str(numbers(h,k)), <span class="string">'.txt'</span>)
+0172            
+0173            [ Indexa2 ] = user_structure( name, 20,12,plotting);
+0174            [Indexa_new] = assing_angles_using_means(Indexa,Indexa2,plotting);
+0175            [User_Cell User_Cell_Bad] = ModelCreation(Indexa_new);
+0176            Model_Group = ModelGroupCreation(User_Cell,Model_Group);
+0177            Model_Group_Bad = ModelGroupCreation(User_Cell_Bad,Model_Group_Bad); <span class="comment">%take the values user got out of the road</span>
+0178         <span class="keyword">end</span>
+0179    <span class="keyword">end</span>
+0180  <span class="keyword">end</span>
+0181 all_struct.yiannis = Model_Group; 
+0182 all_struct_bad.yiannis = Model_Group_Bad; 
+0183 
+0184 
+0185 
+0186 
+0187 filenames= {
+0188             <span class="string">'loizos2-golf'</span>;
+0189             <span class="string">'loizos-golf'</span>;        
+0190            };
+0191        
+0192 <span class="comment">%filenames={};</span>
+0193 
+0194 numbers=[21 20 19 18 17 16 15 14 13 12 11 10 9 8 7 6 5 4 3 2 1 0 0 0;
+0195          8 7 6 5 4 3 2 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0;
+0196          ];
+0197  Model_Group=cell(0); 
+0198  Model_Group_Bad=cell(0);
+0199  <span class="keyword">for</span> h=1:size(filenames,1)
+0200    <span class="keyword">for</span> k=1:size(numbers,2)
+0201        <span class="keyword">if</span> numbers(h,k) ~= 0
+0202            name = strcat(filenames{h}, num2str(numbers(h,k)), <span class="string">'.txt'</span>)
+0203            
+0204            [ Indexa2 ] = user_structure( name, 20,12,plotting);
+0205            [Indexa_new] = assing_angles_using_means(Indexa,Indexa2,plotting);
+0206            [User_Cell User_Cell_Bad] = ModelCreation(Indexa_new);
+0207            Model_Group = ModelGroupCreation(User_Cell,Model_Group);
+0208            Model_Group_Bad = ModelGroupCreation(User_Cell_Bad,Model_Group_Bad); <span class="comment">%take the values user got out of the road</span>
+0209         <span class="keyword">end</span>
+0210    <span class="keyword">end</span>
+0211  <span class="keyword">end</span>
+0212 all_struct.loizos = Model_Group; 
+0213 all_struct_bad.loizos = Model_Group_Bad; 
+0214 
+0215 
+0216 filenames= {
+0217             <span class="string">'xristos2-golf'</span>;
+0218             <span class="string">'xristos-golf'</span>       
+0219            };
+0220        
+0221 <span class="comment">%filenames={};</span>
+0222 
+0223 numbers=[
+0224          6 5 4 3 2 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0;
+0225          23 22 21 20 19 18 17 16 15 14 13 12 11 10 9 8 7 6 5 4 3 2 1 0
+0226          ];
+0227  Model_Group=cell(0); 
+0228  Model_Group_Bad=cell(0);
+0229  <span class="keyword">for</span> h=1:size(filenames,1)
+0230    <span class="keyword">for</span> k=1:size(numbers,2)
+0231        <span class="keyword">if</span> numbers(h,k) ~= 0
+0232            name = strcat(filenames{h}, num2str(numbers(h,k)), <span class="string">'.txt'</span>)
+0233            
+0234            [ Indexa2 ] = user_structure( name, 20,12,plotting);
+0235            [Indexa_new] = assing_angles_using_means(Indexa,Indexa2,plotting);
+0236            [User_Cell User_Cell_Bad] = ModelCreation(Indexa_new);
+0237            Model_Group = ModelGroupCreation(User_Cell,Model_Group);
+0238            Model_Group_Bad = ModelGroupCreation(User_Cell_Bad,Model_Group_Bad); <span class="comment">%take the values user got out of the road</span>
+0239         <span class="keyword">end</span>
+0240    <span class="keyword">end</span>
+0241  <span class="keyword">end</span>
+0242 all_struct.xristos = Model_Group; 
+0243 all_struct_bad.xristos = Model_Group_Bad;
+0244 
+0245 
+0246</pre></div>
+<hr><address>Generated on Thu 07-Jun-2012 12:09:53 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

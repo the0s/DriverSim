@@ -1,0 +1,57 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of loadRacerFile</title>
+  <meta name="keywords" content="loadRacerFile">
+  <meta name="description" content="LOADRACERFILE Loads the particular file creater from Racer">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">functions</a> &gt; loadRacerFile.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for functions&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>loadRacerFile
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>LOADRACERFILE Loads the particular file creater from Racer</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function [ matrix ] = loadRacerFile( filename ) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment">LOADRACERFILE Loads the particular file creater from Racer
+   filename-&gt; name of the file (txt)</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="RacerToMatlab.html" class="code" title="function [A,check, speed, brakes,gas,clutch,gear,lapdistance,time, position3d, acceleration3d,steering, gForceLat,gForceLong,handbrake,lapTime] = RacerToMatlab(filename, instance)">RacerToMatlab</a>	Convert Racer text to variable arrays</li><li><a href="cut_data.html" class="code" title="function [datacell] = cut_data( filename, len )">cut_data</a>	CUT_DATA Creates a cell of data of length according to the length parameter</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [ matrix ] = loadRacerFile( filename )</a>
+0002 <span class="comment">%LOADRACERFILE Loads the particular file creater from Racer</span>
+0003 <span class="comment">%   filename-&gt; name of the file (txt)</span>
+0004 
+0005     fid = fopen(filename);
+0006     matrix = fscanf(fid,<span class="string">'%g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g'</span>,[19, inf] );
+0007     fclose(fid);
+0008 <span class="keyword">end</span>
+0009</pre></div>
+<hr><address>Generated on Thu 07-Jun-2012 12:09:53 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

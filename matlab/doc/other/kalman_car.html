@@ -1,0 +1,143 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of kalman_car</title>
+  <meta name="keywords" content="kalman_car">
+  <meta name="description" content="% Script uses the ready made Kalman filter to plot the predict data -&gt;not Used just to see if its is working">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">other</a> &gt; kalman_car.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for other&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>kalman_car
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>% Script uses the ready made Kalman filter to plot the predict data -&gt;not Used just to see if its is working</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment">% Script uses the ready made Kalman filter to plot the predict data -&gt;not Used just to see if its is working</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <span class="comment">%% Script uses the ready made Kalman filter to plot the predict data -&gt;not Used just to see if its is working</span>
+0002 
+0003 <span class="comment">% Make a point move in the 2D plane</span>
+0004 <span class="comment">% State = (x y xdot ydot). We only observe (x y).</span>
+0005 
+0006 <span class="comment">% This code was used to generate Figure 17.9 of &quot;Artificial Intelligence: a Modern Approach&quot;,</span>
+0007 <span class="comment">% Russell and Norvig, 2nd edition, Prentice Hall, in preparation.</span>
+0008 
+0009 <span class="comment">% X(t+1) = F X(t) + noise(Q)</span>
+0010 <span class="comment">% Y(t) = H X(t) + noise(R)</span>
+0011 x = [position3d ; acceleration3d;speed];
+0012 
+0013 ss = 7; <span class="comment">% state size</span>
+0014 os = 7; <span class="comment">% observation size</span>
+0015 F = eye(ss);
+0016 H = eye(os);
+0017 Q = 0.1*eye(ss);
+0018 R = 1*eye(os);
+0019 initx = x(:,1);
+0020 initV = 10*eye(ss);
+0021 
+0022 test = 1:1500;
+0023 run(<span class="string">'C:\Users\The0s\Desktop\Project Files\Project\DriverSim\matlab\learn_physics.m'</span>)
+0024 F=F2;
+0025 H=H2;
+0026 Q=Q2;
+0027 R=R2;
+0028 initx=initx2;
+0029 initV=initV2; 
+0030 x = [position3d ; acceleration3d;speed];
+0031 <span class="comment">%seed = 9;</span>
+0032 <span class="comment">%rand('state', seed);</span>
+0033 <span class="comment">%randn('state', seed);</span>
+0034 <span class="comment">%T = 10;</span>
+0035 <span class="comment">%[x,y] = sample_lds(F, H, Q, R, initx, T);</span>
+0036 
+0037 [xfilt, Vfilt, VVfilt, loglik] = kalman_filter(x, F, H, Q, R, initx, initV);
+0038 [xsmooth, Vsmooth] = kalman_smoother(x, F, H, Q, R, initx, initV);
+0039 
+0040 dfilt = x([1 2],:) - xfilt([1 2],:);
+0041 mse_filt = sqrt(sum(sum(dfilt.^2)))
+0042 
+0043 dsmooth = x([1 2],:) - xsmooth([1 2],:);
+0044 mse_smooth = sqrt(sum(sum(dsmooth.^2)))
+0045 
+0046 
+0047 figure 
+0048 subplot(2,1,1)
+0049 hold on
+0050 plot3(x(1,:), x(2,:),x(3,:), <span class="string">'ks-'</span>);
+0051 plot3(x(1,:), x(2,:),x(3,:), <span class="string">'g*'</span>);
+0052 plot3(xfilt(1,:), xfilt(2,:),xfilt(3,:), <span class="string">'rx:'</span>);
+0053 <span class="comment">%for t=1:T, plotgauss2d(xfilt(9:10,t), Vfilt(9:10, 9:10, t)); end</span>
+0054 hold off
+0055 legend(<span class="string">'true'</span>, <span class="string">'observed'</span>, <span class="string">'filtered'</span>, 0)
+0056 xlabel(<span class="string">'X1'</span>)
+0057 ylabel(<span class="string">'X2'</span>)
+0058 
+0059 subplot(2,1,2)
+0060 hold on
+0061 plot3(x(1,:), x(2,:),x(3,:), <span class="string">'ks-'</span>);
+0062 plot3(x(1,:), x(2,:),x(3,:), <span class="string">'g*'</span>);
+0063 plot3(xsmooth(1,:), xsmooth(2,:),xsmooth(3,:), <span class="string">'rx:'</span>);
+0064 <span class="comment">%for t=1:T, plotgauss2d(xsmooth(9:10,t), Vsmooth(9:10, 9:10, t)); end</span>
+0065 hold off
+0066 legend(<span class="string">'true'</span>, <span class="string">'observed'</span>, <span class="string">'smoothed'</span>, 0)
+0067 xlabel(<span class="string">'X1'</span>)
+0068 ylabel(<span class="string">'X2'</span>)
+0069 
+0070 
+0071 figure 
+0072 subplot(2,1,1)
+0073 hold on
+0074 plot3(x(4,:), x(5,:),x(6,:), <span class="string">'ks-'</span>);
+0075 plot3(x(4,:), x(5,:), x(6,:),<span class="string">'g*'</span>);
+0076 plot3(xfilt(4,:), xfilt(5,:),xfilt(6,:), <span class="string">'rx:'</span>);
+0077 <span class="comment">%for t=1:T, plotgauss2d(xfilt(9:10,t), Vfilt(9:10, 9:10, t)); end</span>
+0078 hold off
+0079 legend(<span class="string">'true'</span>, <span class="string">'observed'</span>, <span class="string">'filtered'</span>, 0)
+0080 xlabel(<span class="string">'X1'</span>)
+0081 ylabel(<span class="string">'X2'</span>)
+0082 
+0083 subplot(2,1,2)
+0084 hold on
+0085 plot3(x(4,:), x(5,:), x(6,:),<span class="string">'ks-'</span>);
+0086 plot3(x(4,:), x(5,:), x(6,:), <span class="string">'g*'</span>);
+0087 plot3(xsmooth(4,:), xsmooth(5,:),xsmooth(6,:), <span class="string">'rx:'</span>);
+0088 <span class="comment">%for t=1:T, plotgauss2d(xsmooth(9:10,t), Vsmooth(9:10, 9:10, t)); end</span>
+0089 hold off
+0090 legend(<span class="string">'true'</span>, <span class="string">'observed'</span>, <span class="string">'smoothed'</span>, 0)
+0091 xlabel(<span class="string">'X1'</span>)
+0092 ylabel(<span class="string">'X2'</span>)
+0093 
+0094 
+0095 
+0096</pre></div>
+<hr><address>Generated on Thu 07-Jun-2012 12:09:53 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

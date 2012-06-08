@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of ModelGroupCreation</title>
+  <meta name="keywords" content="ModelGroupCreation">
+  <meta name="description" content="MODELGROUPCREATION Get a file from ModelCretion to group parameters with">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">functions</a> &gt; ModelGroupCreation.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for functions&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>ModelGroupCreation
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>MODELGROUPCREATION Get a file from ModelCretion to group parameters with</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function [ Model_Group ] = ModelGroupCreation(Model_Cell,Model_Group ) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment">MODELGROUPCREATION Get a file from ModelCretion to group parameters with
+same angle transition
+%BETTER implemented with hash tables</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [ Model_Group ] = ModelGroupCreation(Model_Cell,Model_Group )</a>
+0002 <span class="comment">%MODELGROUPCREATION Get a file from ModelCretion to group parameters with</span>
+0003 <span class="comment">%same angle transition</span>
+0004 <span class="comment">%%BETTER implemented with hash tables</span>
+0005 
+0006 <span class="keyword">if</span> size(Model_Cell{1,1}) &gt; 0 <span class="comment">%avoid error with empty cell by avoiding extra calculations</span>
+0007  
+0008     
+0009     <span class="keyword">for</span> x=1:size(Model_Cell,2) 
+0010     <span class="comment">%hash_index=strcat(num2str(Model_Cell{3,x}(1,1)),',',num2str(Model_Cell{3,x}(1,2)),',',num2str(Model_Cell{3,x}(1,3)) );</span>
+0011     p=size(Model_Group,2); <span class="comment">%check current sze fo model group</span>
+0012         <span class="keyword">if</span> size(Model_Group,2)==0
+0013             p=1;
+0014             Model_Group{1,p} = Model_Cell{3,x};
+0015             Model_Group{2,p} = cell(1);
+0016             Model_Group{2,p}{1,1} = Model_Cell{2,x};
+0017             Model_Group{3,p} = cell(1);
+0018             Model_Group{3,p}{1,1} = Model_Cell{4,x};
+0019 
+0020         <span class="keyword">else</span>
+0021             <span class="keyword">for</span> y=1:size(Model_Group,2)
+0022                 <span class="keyword">if</span> Model_Cell{3,x} == Model_Group{1,y}
+0023                    not_in=0;
+0024 
+0025                    Model_Group{2,y}{1,size(Model_Group{2,y},2)+1} = Model_Cell{2,x};
+0026                    Model_Group{3,y}{1,size(Model_Group{3,y},2)+1} = Model_Cell{4,x};
+0027                    <span class="comment">%ADD</span>
+0028                    <span class="keyword">break</span>;
+0029                 <span class="keyword">else</span>
+0030                     not_in=1;
+0031                 <span class="keyword">end</span>
+0032             <span class="keyword">end</span>
+0033             <span class="keyword">if</span> not_in == 1
+0034                 p=p+1;
+0035                 Model_Group{1,p} = Model_Cell{3,x};
+0036                 Model_Group{2,p} = cell(1);
+0037                 Model_Group{2,p}{1,1} = Model_Cell{2,x};
+0038                 Model_Group{3,p} = cell(1);
+0039                 Model_Group{3,p}{1,1} = Model_Cell{4,x};            
+0040             <span class="keyword">end</span>
+0041 
+0042         <span class="keyword">end</span>
+0043 
+0044 
+0045 
+0046     <span class="keyword">end</span>
+0047     
+0048 <span class="keyword">end</span>
+0049 
+0050 
+0051 
+0052 
+0053 
+0054 <span class="keyword">end</span>
+0055</pre></div>
+<hr><address>Generated on Thu 07-Jun-2012 12:09:53 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

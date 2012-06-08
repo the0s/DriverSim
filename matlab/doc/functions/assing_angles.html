@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of assing_angles</title>
+  <meta name="keywords" content="assing_angles">
+  <meta name="description" content="ASSING_ANGLES Get Real angles and assing them to the user according to the">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">functions</a> &gt; assing_angles.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for functions&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>assing_angles
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>ASSING_ANGLES Get Real angles and assing them to the user according to the</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function [ Indexa ] = assing_angles( real_structure, users_structure,plotting ) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment">ASSING_ANGLES Get Real angles and assing them to the user according to the
+coordinates maximum and minimum
+  THIS IS NOT USED SINCE WE CAN HAVE POINTS NOT ASSINGED TO AN ANGLE
+   INPUTS
+ real_structure --&gt; structure of the road that has the angles with the coordinates
+ users_structure --&gt; structure of the user that the angle are goint to be assigned
+OUTPUT
+structure of user_structure input where the angles assinged added to it</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [ Indexa ] = assing_angles( real_structure, users_structure,plotting )</a>
+0002 <span class="comment">%ASSING_ANGLES Get Real angles and assing them to the user according to the</span>
+0003 <span class="comment">%coordinates maximum and minimum</span>
+0004 <span class="comment">%  THIS IS NOT USED SINCE WE CAN HAVE POINTS NOT ASSINGED TO AN ANGLE</span>
+0005 <span class="comment">%   INPUTS</span>
+0006 <span class="comment">% real_structure --&gt; structure of the road that has the angles with the coordinates</span>
+0007 <span class="comment">% users_structure --&gt; structure of the user that the angle are goint to be assigned</span>
+0008 <span class="comment">%OUTPUT</span>
+0009 <span class="comment">%structure of user_structure input where the angles assinged added to it</span>
+0010 <span class="keyword">if</span> ~exist(<span class="string">'plotting'</span>, <span class="string">'var'</span>)
+0011     plotting = <span class="string">'y'</span> ;
+0012 <span class="keyword">end</span>
+0013 
+0014 angles_real = real_structure.angles;
+0015 max_min_real = real_structure.max_min;
+0016 
+0017 max_min_user = users_structure.max_min;
+0018 
+0019 <span class="comment">%road_offset=[15.0;0.4;10.0];</span>
+0020 <span class="comment">%temp=1;</span>
+0021 <span class="keyword">for</span> x=1:size(max_min_user,2)
+0022     <span class="comment">%l=0;</span>
+0023     <span class="keyword">for</span> p=1:1:3 <span class="comment">%set the offset for matching (car can go up or down, left or right to a straight road)</span>
+0024         <span class="keyword">if</span> users_structure.mean_var{1,x}(p,2) &lt; 1
+0025             road_offset(p,1) = 30;
+0026         <span class="keyword">else</span>
+0027             road_offset(p,1) = 10;
+0028         <span class="keyword">end</span>
+0029     <span class="keyword">end</span>
+0030     <span class="keyword">for</span> y=1:size(max_min_real,2)
+0031        max_user = max_min_user{1,x}(:,2) - road_offset;
+0032        max_real = max_min_real{1,y}(:,2) ;
+0033        
+0034        min_user = max_min_user{1,x}(:,1) + road_offset; 
+0035        min_real= max_min_real{1,y}(:,1) ;
+0036        
+0037        <span class="keyword">if</span>  and(( max_user &lt;= max_real ),( min_user &gt;= min_real ) )
+0038             users_structure.anglesLap(1,x) = angles_real(1,y);         
+0039             <span class="comment">%if (temp == x)</span>
+0040             <span class="comment">%    l=l+1;</span>
+0041             <span class="comment">%end</span>
+0042             <span class="comment">%temp=x;</span>
+0043             <span class="comment">%display(x);</span>
+0044             <span class="keyword">break</span>;
+0045        <span class="keyword">else</span>
+0046             users_structure.anglesLap(1,x) = -1;
+0047        <span class="keyword">end</span>
+0048     <span class="keyword">end</span>
+0049     <span class="comment">%display(l);</span>
+0050 <span class="keyword">end</span>
+0051 <span class="keyword">if</span> plotting==<span class="string">'y'</span>
+0052     subplot(1,2,1)
+0053     plot(users_structure.anglesLap);
+0054     subplot(1,2,2)
+0055     plot(angles_real);
+0056 <span class="keyword">end</span>
+0057 Indexa=users_structure;
+0058 
+0059 <span class="keyword">end</span>
+0060</pre></div>
+<hr><address>Generated on Thu 07-Jun-2012 12:09:53 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

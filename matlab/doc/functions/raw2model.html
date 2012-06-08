@@ -1,0 +1,200 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of raw2model</title>
+  <meta name="keywords" content="raw2model">
+  <meta name="description" content="RAW2MODEL Takes a user input and convert it to a model">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">functions</a> &gt; raw2model.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for functions&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>raw2model
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>RAW2MODEL Takes a user input and convert it to a model</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function [ parameters ] = raw2model( raw, class ) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment">RAW2MODEL Takes a user input and convert it to a model
+  RAW user input from RACE DATA
+  CLASS class of the user for classification</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="rms_s.html" class="code" title="function [ rms_r ] = rms_s( sequence)">rms_s</a>	RMS_S find the rms value of a sequence of a signal</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="angleModelFeaturesCreator.html" class="code" title="function [ er, param, p ] = angleModelFeaturesCreator( er, param, Model_Group, angle, classnum, p )">angleModelFeaturesCreator</a>	ANGLEMODELFEATURESCREATOR gets a group model of a user and returns lines</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [ parameters ] = raw2model( raw, class )</a>
+0002 <span class="comment">%RAW2MODEL Takes a user input and convert it to a model</span>
+0003 <span class="comment">%  RAW user input from RACE DATA</span>
+0004 <span class="comment">%  CLASS class of the user for classification</span>
+0005 
+0006 parameters(1,1) = mean(raw(:,1));
+0007 parameters(1,2) = mean(raw(:,2));
+0008 parameters(1,3) = mean(raw(:,3));
+0009 parameters(1,4) = mean(raw(:,4));
+0010 parameters(1,5) = max(raw(:,1));
+0011 parameters(1,6) = max(raw(:,2));
+0012 parameters(1,7) = max(raw(:,3));
+0013 parameters(1,8) = max(raw(:,4));
+0014 parameters(1,9) = min(raw(:,1));
+0015 parameters(1,10) = min(raw(:,2));
+0016 parameters(1,11) = min(raw(:,3));
+0017 parameters(1,12) = min(raw(:,4));
+0018 parameters(1,13) = var(raw(:,1));
+0019 parameters(1,14) = var(raw(:,2));
+0020 parameters(1,15) = var(raw(:,3));
+0021 parameters(1,16) = var(raw(:,4));
+0022 parameters(1,17) =  corr(raw(:,1),raw(:,2));
+0023 parameters(1,18) =  corr(raw(:,1),raw(:,3));
+0024 parameters(1,19) =  corr(raw(:,1),raw(:,4));
+0025 parameters(1,20) = corr(raw(:,2),raw(:,3));
+0026 parameters(1,21) = corr(raw(:,2),raw(:,4));
+0027 parameters(1,22) =  corr(raw(:,3),raw(:,4));
+0028 
+0029 q =  cov(raw(:,1),raw(:,2));
+0030 parameters(1,23)= q(1,2);
+0031 q =  cov(raw(:,1),raw(:,3));
+0032 parameters(1,24)= q(1,2);
+0033 q =  cov(raw(:,1),raw(:,4));
+0034 parameters(1,25)= q(1,2);
+0035 q =  cov(raw(:,2),raw(:,3));
+0036 parameters(1,26)= q(1,2);
+0037 q =  cov(raw(:,2),raw(:,4));
+0038 parameters(1,27)= q(1,2);
+0039 q =  cov(raw(:,3),raw(:,4));
+0040 parameters(1,28)= q(1,2);
+0041 
+0042 parameters(1,29) = mean(raw(:,5));
+0043 parameters(1,30) = max(raw(:,5));
+0044 parameters(1,31) = min(raw(:,5));
+0045 parameters(1,32) = var(raw(:,5));
+0046 
+0047 parameters(1,33) = corr(raw(:,5),raw(:,1));
+0048 parameters(1,34) = corr(raw(:,5),raw(:,2));
+0049 parameters(1,35) = corr(raw(:,5),raw(:,3));
+0050 parameters(1,36) = corr(raw(:,5),raw(:,4));
+0051 
+0052 q =  cov(raw(:,1),raw(:,5));
+0053 parameters(1,37)= q(1,2);
+0054 q =  cov(raw(:,2),raw(:,5));
+0055 parameters(1,38)= q(1,2);
+0056 q =  cov(raw(:,3),raw(:,5));
+0057 parameters(1,39)= q(1,2);
+0058 q =  cov(raw(:,4),raw(:,5));
+0059 parameters(1,40)= q(1,2);
+0060 
+0061 parameters(1,41)= mean(conv(raw(:,5),raw(:,5)));
+0062 parameters(1,42)= mean(conv(raw(:,5),raw(:,4)));
+0063 parameters(1,43)= mean(conv(raw(:,5),raw(:,3)));
+0064 parameters(1,44)= mean(conv(raw(:,5),raw(:,2)));
+0065 parameters(1,45)= mean(conv(raw(:,5),raw(:,1)));
+0066 parameters(1,46)= mean(conv(raw(:,4),raw(:,4)));
+0067 parameters(1,47)= mean(conv(raw(:,4),raw(:,3)));
+0068 parameters(1,48)= mean(conv(raw(:,4),raw(:,2)));
+0069 parameters(1,49)= mean(conv(raw(:,4),raw(:,1)));
+0070 parameters(1,50)= mean(conv(raw(:,3),raw(:,3)));
+0071 parameters(1,51)= mean(conv(raw(:,3),raw(:,2)));
+0072 parameters(1,52)= mean(conv(raw(:,3),raw(:,1)));
+0073 parameters(1,53)= mean(conv(raw(:,2),raw(:,2)));
+0074 parameters(1,54)= mean(conv(raw(:,2),raw(:,1)));
+0075 parameters(1,55)= mean(conv(raw(:,1),raw(:,1)));
+0076 
+0077 parameters(1,56)= sum(abs(fft(raw(:,5))));
+0078 parameters(1,57)= sum(abs(fft(raw(:,4))));
+0079 parameters(1,58)= sum(abs(fft(raw(:,3))));
+0080 parameters(1,59)= sum(abs(fft(raw(:,2))));
+0081 parameters(1,60)= sum(abs(fft(raw(:,1))));
+0082 parameters(1,61)= sum(abs(ifft(raw(:,5))));
+0083 parameters(1,62)= sum(abs(ifft(raw(:,4))));
+0084 parameters(1,63)= sum(abs(ifft(raw(:,3))));
+0085 parameters(1,64)= sum(abs(ifft(raw(:,2))));
+0086 parameters(1,65)= sum(abs(ifft(raw(:,1))));
+0087 parameters(1,66)= <a href="rms_s.html" class="code" title="function [ rms_r ] = rms_s( sequence)">rms_s</a>(raw(:,1));
+0088 parameters(1,67)= <a href="rms_s.html" class="code" title="function [ rms_r ] = rms_s( sequence)">rms_s</a>(raw(:,2));
+0089 parameters(1,68)= <a href="rms_s.html" class="code" title="function [ rms_r ] = rms_s( sequence)">rms_s</a>(raw(:,3));
+0090 parameters(1,69)= <a href="rms_s.html" class="code" title="function [ rms_r ] = rms_s( sequence)">rms_s</a>(raw(:,4));
+0091 parameters(1,70)= <a href="rms_s.html" class="code" title="function [ rms_r ] = rms_s( sequence)">rms_s</a>(raw(:,5));
+0092 
+0093 parameters(1,71)= mean(diff(raw(:,1),1));
+0094 parameters(1,72)= mean(diff(raw(:,2),1));
+0095 parameters(1,73)= mean(diff(raw(:,3),1));
+0096 parameters(1,74)= mean(diff(raw(:,4),1));
+0097 parameters(1,75)= mean(diff(raw(:,5),1));
+0098 
+0099 parameters(1,76)= mean(diff(raw(:,1),2));
+0100 parameters(1,77)= mean(diff(raw(:,2),2));
+0101 parameters(1,78)= mean(diff(raw(:,3),2));
+0102 parameters(1,79)= mean(diff(raw(:,4),2));
+0103 parameters(1,80)= mean(diff(raw(:,5),2));
+0104 
+0105 parameters(1,81) = mean(ifft(log(abs(fft(raw(:,1))))));
+0106 parameters(1,82) = mean(ifft(log(abs(fft(raw(:,2))))));
+0107 parameters(1,83) = mean(ifft(log(abs(fft(raw(:,3))))));
+0108 parameters(1,84) = mean(ifft(log(abs(fft(raw(:,4))))));
+0109 parameters(1,85) = mean(ifft(log(abs(fft(raw(:,5))))));
+0110 
+0111 parameters(1,86)= mean(diff(ifft(log(abs(fft(raw(:,1))))),1));
+0112 parameters(1,87)= mean(diff(ifft(log(abs(fft(raw(:,2))))),1));
+0113 parameters(1,88)= mean(diff(ifft(log(abs(fft(raw(:,3))))),1));
+0114 parameters(1,89)= mean(diff(ifft(log(abs(fft(raw(:,4))))),1));
+0115 parameters(1,90)= mean(diff(ifft(log(abs(fft(raw(:,5))))),1));
+0116 
+0117 parameters(1,91)= mean(diff(ifft(log(abs(fft(raw(:,1))))),2));
+0118 parameters(1,92)= mean(diff(ifft(log(abs(fft(raw(:,2))))),2));
+0119 parameters(1,93)= mean(diff(ifft(log(abs(fft(raw(:,3))))),2));
+0120 parameters(1,94)= mean(diff(ifft(log(abs(fft(raw(:,4))))),2));
+0121 parameters(1,95)= mean(diff(ifft(log(abs(fft(raw(:,5))))),2));
+0122 
+0123 parameters(1,96) = kurtosis(raw(:,1));
+0124 parameters(1,97) = kurtosis(raw(:,2));
+0125 parameters(1,98) = kurtosis(raw(:,3));
+0126 parameters(1,99) = kurtosis(raw(:,4));
+0127 
+0128 parameters(1,100) = skewness(raw(:,1));
+0129 parameters(1,101) = skewness(raw(:,2));
+0130 parameters(1,102) = skewness(raw(:,3));
+0131 parameters(1,103) = skewness(raw(:,4));
+0132 
+0133 
+0134 
+0135 <span class="keyword">for</span> x = 1:size(parameters,2)
+0136     <span class="keyword">if</span> isnan(parameters(1,x)) == 1
+0137         parameters(1,x)=0;
+0138     <span class="keyword">end</span>
+0139     <span class="keyword">if</span> isinf(parameters(1,x)) == 1
+0140         parameters(1,x)=0;
+0141     <span class="keyword">end</span>
+0142 <span class="keyword">end</span>
+0143 
+0144 <span class="keyword">if</span> exist(<span class="string">'class'</span>, <span class="string">'var'</span>)
+0145     parameters(1,size(parameters,2)+1) = class;
+0146 <span class="keyword">end</span>
+0147 
+0148 
+0149 
+0150 <span class="keyword">end</span>
+0151</pre></div>
+<hr><address>Generated on Thu 07-Jun-2012 12:09:53 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

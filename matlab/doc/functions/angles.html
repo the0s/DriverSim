@@ -1,0 +1,155 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of angles</title>
+  <meta name="keywords" content="angles">
+  <meta name="description" content="ANGLES Find the angle in a block of direction vectors using weighted">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">functions</a> &gt; angles.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for functions&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>angles
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>ANGLES Find the angle in a block of direction vectors using weighted</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function [ angle_last ,angle_vector_consequtive,angle_cell,angle_sequences] = angles(direction_vectors,block,plotting) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment">ANGLES Find the angle in a block of direction vectors using weighted
+average
+   DOT PRODUCT --&gt; angle =&gt; a.b = |a|*|b|* cos x
+ INPUT
+ direction_vectors --&gt; series of 3xm direction vectors
+ block --&gt; number of direction_vectors to merge-overlap
+ OUTPUT
+ angle_last -&gt; resulting angle of the block of road
+ angle_vector_consequtive -&gt; angles between the direction vectors in  sequence in the
+ direction_vector
+ angle_cell -&gt; block of angles of different combinations between them
+ angle_sequences -&gt; row= block and each column is the result of the
+ weighted average of each block column in angle_cell</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="weight_average.html" class="code" title="function [ w_average ] = weight_average( vector_no,n )">weight_average</a>	WEIGHT_AVERAGE Weighted average on a vector according to their position</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="anglesOntrack.html" class="code" title="function [ indexa ] = anglesOntrack( angles, direction_vectors, position3d ,pos, vectors_merge_no,angles_block_no,plotting)">anglesOntrack</a>	ANGLESONTRACK split track into angles and their direction vectors</li><li><a href="lap_structure.html" class="code" title="function [ indexa ] = lap_structure( filename, vectors_merge_no,angles_block_no )">lap_structure</a>	LAP_STUCTURE Creates a structure of the Track entered</li><li><a href="user_structure.html" class="code" title="function [ indexa ] = user_structure(  filename, vectors_merge_no,angles_block_no, plotting, instance )">user_structure</a>	USER_STRUCTURE Creates a structure of the Track entered</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [ angle_last ,angle_vector_consequtive,angle_cell,angle_sequences] = angles(direction_vectors,block,plotting)</a>
+0002 <span class="comment">%ANGLES Find the angle in a block of direction vectors using weighted</span>
+0003 <span class="comment">%average</span>
+0004 <span class="comment">%   DOT PRODUCT --&gt; angle =&gt; a.b = |a|*|b|* cos x</span>
+0005 <span class="comment">% INPUT</span>
+0006 <span class="comment">% direction_vectors --&gt; series of 3xm direction vectors</span>
+0007 <span class="comment">% block --&gt; number of direction_vectors to merge-overlap</span>
+0008 <span class="comment">% OUTPUT</span>
+0009 <span class="comment">% angle_last -&gt; resulting angle of the block of road</span>
+0010 <span class="comment">% angle_vector_consequtive -&gt; angles between the direction vectors in  sequence in the</span>
+0011 <span class="comment">% direction_vector</span>
+0012 <span class="comment">% angle_cell -&gt; block of angles of different combinations between them</span>
+0013 <span class="comment">% angle_sequences -&gt; row= block and each column is the result of the</span>
+0014 <span class="comment">% weighted average of each block column in angle_cell</span>
+0015 
+0016 <span class="keyword">if</span> ~exist(<span class="string">'block'</span>, <span class="string">'var'</span>)
+0017     block = 12;
+0018 <span class="keyword">end</span>
+0019 
+0020 <span class="keyword">if</span> ~exist(<span class="string">'plotting'</span>, <span class="string">'var'</span>)
+0021     plotting = <span class="string">'y'</span> ;
+0022 <span class="keyword">end</span>
+0023 
+0024 <span class="comment">%%Find all combinations of angles in the block</span>
+0025    z=0; 
+0026   <span class="keyword">for</span> y= 0:floor(block/2):length(direction_vectors)-block
+0027       <span class="keyword">for</span> k =(1+y):(block+y-1)
+0028           <span class="keyword">for</span> j =1:block-(k-y)
+0029             dot_product1 = dot(direction_vectors(:,k), direction_vectors(:,k+j));
+0030             magnitude1 = norm(direction_vectors(:,k)) * norm(direction_vectors(:,k+j));
+0031             check90 = real(acos(dot_product1/magnitude1))* 180 / pi; 
+0032             <span class="keyword">if</span> check90 &gt; 90
+0033                 check90 = 180 - check90;
+0034             <span class="keyword">end</span>
+0035             angle_result(k-y,j+k-y)= check90;          
+0036           <span class="keyword">end</span>
+0037       <span class="keyword">end</span>
+0038       z=z+1;     
+0039       angle_cell{z}=num2cell(angle_result);
+0040   <span class="keyword">end</span>   
+0041     
+0042   <span class="comment">%%Weight Averaging the combination of angles</span>
+0043   <span class="keyword">if</span> plotting==<span class="string">'y'</span>
+0044     figure
+0045   <span class="keyword">end</span>
+0046   s=0;  
+0047   <span class="keyword">for</span> a=1:length(angle_cell)
+0048     x = cell2mat(angle_cell{1,a});
+0049     newA=[];
+0050     <span class="comment">%create a weighted average row from value of the columns</span>
+0051     <span class="keyword">for</span> f=2:size(x,2)
+0052         newA =[newA <a href="weight_average.html" class="code" title="function [ w_average ] = weight_average( vector_no,n )">weight_average</a>(x(:,f),f-1)] ;  
+0053     <span class="keyword">end</span>
+0054    s=s+1;     
+0055    angle_sequences(s,:)=(newA);
+0056    <span class="keyword">if</span> plotting==<span class="string">'y'</span>
+0057    <span class="comment">%plot sequences</span>
+0058     t= 1+(s-1)*6: length(newA)+(s-1)*6;   
+0059     
+0060        <span class="keyword">if</span> mod(s,2)==0
+0061         plot(t,newA,<span class="string">'g'</span>); 
+0062        <span class="keyword">else</span>
+0063         plot(t,newA,<span class="string">'r'</span>); 
+0064        <span class="keyword">end</span>
+0065        hold on
+0066     <span class="keyword">end</span>
+0067    
+0068   <span class="keyword">end</span>
+0069  
+0070   <span class="comment">%Last angle of block is the total result</span>
+0071   <span class="comment">%angle_last = angle_sequences(:,block-1)';</span>
+0072   <span class="comment">%change to give weighted average of all</span>
+0073   <span class="keyword">for</span> g=1:size(angle_sequences,1)
+0074     angle_last(g) = <a href="weight_average.html" class="code" title="function [ w_average ] = weight_average( vector_no,n )">weight_average</a>(fliplr(angle_sequences(g,:)),block-1);
+0075   <span class="keyword">end</span>
+0076   
+0077     <span class="keyword">if</span> plotting==<span class="string">'y'</span>
+0078       plot(11:6:length(angle_sequences(:,block-1))*6+10,angle_sequences(:,block-1),<span class="string">'b'</span>);
+0079       title(<span class="string">'Angles Sequences + last angle'</span>);
+0080     <span class="keyword">end</span>
+0081   
+0082   
+0083     <span class="keyword">for</span> x=1:length(direction_vectors)-1
+0084         dot_product = dot(direction_vectors(:,x), direction_vectors(:,x+1));
+0085         magnitude = norm(direction_vectors(:,x)) * norm(direction_vectors(:,x+1));
+0086         angle_vector_consequtive(x)=real(acos(dot_product/magnitude))* 180 / pi;
+0087     <span class="keyword">end</span>
+0088     
+0089     <span class="keyword">if</span> plotting==<span class="string">'y'</span>
+0090         figure    
+0091         plot(1:length(angle_vector_consequtive),angle_vector_consequtive);
+0092         title(<span class="string">'Consequtive Angles'</span>);
+0093     <span class="keyword">end</span>
+0094     
+0095 <span class="keyword">end</span>
+0096</pre></div>
+<hr><address>Generated on Thu 07-Jun-2012 12:09:53 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

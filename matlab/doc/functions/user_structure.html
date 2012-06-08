@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of user_structure</title>
+  <meta name="keywords" content="user_structure">
+  <meta name="description" content="USER_STRUCTURE Creates a structure of the Track entered">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">functions</a> &gt; user_structure.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for functions&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>user_structure
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>USER_STRUCTURE Creates a structure of the Track entered</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function [ indexa ] = user_structure(  filename, vectors_merge_no,angles_block_no, plotting, instance ) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment">USER_STRUCTURE Creates a structure of the Track entered
+  filename -&gt; single track data for extrapolating results
+   merge_no -&gt; number of points to merge (EVEN)
+   block -&gt; number of direction_vectors to merge-overlap</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="RacerToMatlab.html" class="code" title="function [A,check, speed, brakes,gas,clutch,gear,lapdistance,time, position3d, acceleration3d,steering, gForceLat,gForceLong,handbrake,lapTime] = RacerToMatlab(filename, instance)">RacerToMatlab</a>	Convert Racer text to variable arrays</li><li><a href="angles.html" class="code" title="function [ angle_last ,angle_vector_consequtive,angle_cell,angle_sequences] = angles(direction_vectors,block,plotting)">angles</a>	ANGLES Find the angle in a block of direction vectors using weighted</li><li><a href="anglesOntrack.html" class="code" title="function [ indexa ] = anglesOntrack( angles, direction_vectors, position3d ,pos, vectors_merge_no,angles_block_no,plotting)">anglesOntrack</a>	ANGLESONTRACK split track into angles and their direction vectors</li><li><a href="vectors.html" class="code" title="function [dir_vect, pos] = vectors(position3d, merge_no, plotting)">vectors</a>	VECTORS create vectors on 3d consequtive points inserted</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [ indexa ] = user_structure(  filename, vectors_merge_no,angles_block_no, plotting, instance )</a>
+0002 <span class="comment">%USER_STRUCTURE Creates a structure of the Track entered</span>
+0003 <span class="comment">%  filename -&gt; single track data for extrapolating results</span>
+0004 <span class="comment">%   merge_no -&gt; number of points to merge (EVEN)</span>
+0005 <span class="comment">%   block -&gt; number of direction_vectors to merge-overlap</span>
+0006 
+0007     <span class="keyword">if</span> ~exist(<span class="string">'instance'</span>, <span class="string">'var'</span>)
+0008         instance = <span class="string">'n'</span>;
+0009     <span class="keyword">end</span>
+0010     
+0011 [A,check, speed, brakes,gas,clutch,gear,lapdistance,time, position3d, acceleration3d,steering, gForceLat,gForceLong,handbrake,lapTime] = <a href="RacerToMatlab.html" class="code" title="function [A,check, speed, brakes,gas,clutch,gear,lapdistance,time, position3d, acceleration3d,steering, gForceLat,gForceLong,handbrake,lapTime] = RacerToMatlab(filename, instance)">RacerToMatlab</a>(filename, instance);
+0012 [direction_vectors pos] = <a href="vectors.html" class="code" title="function [dir_vect, pos] = vectors(position3d, merge_no, plotting)">vectors</a>(position3d, vectors_merge_no,plotting);
+0013 [angles_last ,angle_vector_consequtive,angle_cell,angle_sequences] = <a href="angles.html" class="code" title="function [ angle_last ,angle_vector_consequtive,angle_cell,angle_sequences] = angles(direction_vectors,block,plotting)">angles</a>(direction_vectors,angles_block_no, plotting);
+0014 
+0015 [indexa]= <a href="anglesOntrack.html" class="code" title="function [ indexa ] = anglesOntrack( angles, direction_vectors, position3d ,pos, vectors_merge_no,angles_block_no,plotting)">anglesOntrack</a>(angles_last,direction_vectors,position3d, pos,vectors_merge_no,angles_block_no, plotting);
+0016 
+0017 
+0018 block_vect=floor(angles_block_no/2);
+0019 block_pos = floor(vectors_merge_no/2) * block_vect;
+0020 
+0021 z=1;
+0022 usr_input = [gas; brakes; steering; gear; speed; time;];
+0023 <span class="keyword">for</span> x=block_pos:block_pos:length(position3d)-block_pos <span class="comment">%SASTOOO</span>
+0024 usr_inp{1,z} = usr_input(:,x-(block_pos-1):x+block_pos);
+0025 check_temp{1,z} = check(1,x-(block_pos-1):x+block_pos);
+0026           z=z+1;
+0027 <span class="keyword">end</span>
+0028 
+0029 <span class="keyword">for</span> g=1:z-1
+0030  usr_inp{2,g} = max(check_temp{1,g}(1,:));
+0031 <span class="keyword">end</span>
+0032 
+0033 indexa.user_input = usr_inp;
+0034 
+0035 <span class="keyword">end</span>
+0036</pre></div>
+<hr><address>Generated on Thu 07-Jun-2012 12:09:53 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

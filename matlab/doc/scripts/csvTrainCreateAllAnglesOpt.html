@@ -1,0 +1,133 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of csvTrainCreateAllAnglesOpt</title>
+  <meta name="keywords" content="csvTrainCreateAllAnglesOpt">
+  <meta name="description" content="csvTraincreate Creates the csv files for classification of all angles">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">scripts</a> &gt; csvTrainCreateAllAnglesOpt.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for scripts&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>csvTrainCreateAllAnglesOpt
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>csvTraincreate Creates the csv files for classification of all angles</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function [ param,er ] = csvTrainCreateAllAnglesOpt (type) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment">csvTraincreate Creates the csv files for classification of all angles
+determined by 3 types
+ good-&gt; feature vectors that user was in the lap
+ bad -&gt; feature vectors that user was out of the lap
+ugly-&gt; combined set of bad and good</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [ param,er ] = csvTrainCreateAllAnglesOpt (type)</a>
+0002 <span class="comment">%csvTraincreate Creates the csv files for classification of all angles</span>
+0003 <span class="comment">%determined by 3 types</span>
+0004 <span class="comment">% good-&gt; feature vectors that user was in the lap</span>
+0005 <span class="comment">% bad -&gt; feature vectors that user was out of the lap</span>
+0006 <span class="comment">%ugly-&gt; combined set of bad and good</span>
+0007 
+0008 <span class="comment">%USED after tetUSERWithLAp in order to use all_struct and all_Struct_bad</span>
+0009 
+0010 
+0011 
+0012 <span class="comment">%NOT FIXED</span>
+0013 load(<span class="string">'structUsersAndLap.mat'</span>)
+0014      
+0015 class={<span class="string">'violaris'</span> 0;
+0016        <span class="string">'theo'</span> 1;
+0017        <span class="string">'kotsios'</span> 2;
+0018        <span class="string">'harold'</span> 3;
+0019        <span class="string">'aadil'</span> 4;
+0020        <span class="string">'yiannis'</span> 5;
+0021        <span class="string">'loizos'</span> 6;
+0022        <span class="string">'xristos'</span> 7};
+0023    
+0024  
+0025  angles = {[1,1,0], [1,0,1],[0,1,1],[1,1,1],[1,1,6],[1,6,6],[6,6,21],[6,21,21],[21,21,35],[21,35,35],[35,35,35],[35,35,30],[35,30,30],[30,30,32],[30,32,32],[32,32,14],[32,14,14],[14,14,14],[14,14,7],[14,7,7],[7,7,7],[7,7,18],[7,18,18],[18,18,32],[18,32,32],[32,32,32],[14,14,46],[14,46,46],[46,46,40],[46,40,40],[40,40,20],[24,9,9],[9,9,1],[9,1,1],[1,1,2],[1,2,2],[2,2,2],[2,2,6],[2,6,6],[6,6,31],[6,31,31],[31,31,59],[31,59,59],[59,59,33],[59,33,33],[33,33,2],[33,2,2],[2,2,8],[2,8,8],[8,8,28],[8,28,28],[28,28,14],[28,14,14],[14,14,31],[14,31,31],[31,31,6],[31,6,6],[6,6,6],[6,6,4],[6,4,4],[4,4,5],[4,5,5],[5,5,18],[5,18,18],[18,18,34],[18,34,34],[34,34,34],[34,34,3],[34,3,3],[3,3,1],[3,1,2],[2,2,13],[9,2,2],[2,2,4],[2,4,4],[4,4,19],[4,19,19],[19,19,19],[19,19,10],[19,10,15],[10,15,15],[15,15,25],[15,25,25],[25,25,21],[25,21,21],[21,21,18],[21,18,23],[18,23,23],[23,23,27],[23,27,27],[27,27,9],[27,9,9],[9,9,5],[9,5,6],[5,6,6],[6,6,5],[6,5,4],[5,4,4],[4,4,2],[4,2,1],[2,1,1],[1,0,0],[0,0,0],[0,0,1],[21,21,21],[1,1,12],[9,1,2],[6,4,5],[2,13,13],[19,10,10],[10,10,15],[15,25,21],[21,18,18],[18,18,23],[18,23,27],[6,5,5],[5,5,4],[4,2,2],[2,2,1],[40,40,40],[40,20,20],[20,20,1],[20,1,1],[1,12,12],[12,12,24],[12,24,9],[24,9,1],[33,33,33],[4,5,18],[10,15,25],[9,5,5],[5,5,6],[5,4,2],[46,46,46],[12,24,24],[24,24,9],[8,8,8],[3,3,3],[3,1,1],[9,9,2],[2,4,19],[25,21,18],[20,20,20],[1,12,24],[2,6,31],[59,59,59],[2,13,28],[13,28,28],[28,28,9],[28,9,2],[9,9,9],[5,5,5],[2,8,28],[13,13,28],[30,30,30],[18,18,18],[28,28,28],[31,31,31],[13,28,9],[28,9,9],[15,15,15],[5,6,5],[7,18,32],[31,59,33],[4,4,4],[14,31,6],[6,21,35],[8,28,14],[5,18,34],[34,3,1],[28,14,31],[23,27,9],[1,6,21],[27,27,27],[27,9,5],[13,13,13],[12,12,12];};
+0026 
+0027  <span class="keyword">for</span> aX=1:size(angles,2)
+0028       p=1;   
+0029       param=[];
+0030       er=[];
+0031       <span class="keyword">if</span> (strcmp(type,<span class="string">'good'</span>)) || (strcmp(type,<span class="string">'ugly'</span>))
+0032           Model_Group = all_struct.violaris;
+0033           [ er, param, p ] = angleModelFeaturesCreator( er, param, Model_Group, angles{1,aX}, 0, p );
+0034           Model_Group = all_struct.theo;
+0035           [ er, param, p ] = angleModelFeaturesCreator( er, param, Model_Group, angles{1,aX}, 1, p ); 
+0036           Model_Group = all_struct.kotsios;
+0037           [ er, param, p ] = angleModelFeaturesCreator( er, param, Model_Group, angles{1,aX}, 2, p );
+0038                 Model_Group = all_struct.harold;
+0039           [ er, param, p ] = angleModelFeaturesCreator( er, param, Model_Group, angles{1,aX}, 3, p );
+0040                 Model_Group = all_struct.aadil;
+0041           [ er, param, p ] = angleModelFeaturesCreator( er, param, Model_Group, angles{1,aX}, 4, p );
+0042                 Model_Group = all_struct.yiannis;
+0043           [ er, param, p ] = angleModelFeaturesCreator( er, param, Model_Group, angles{1,aX}, 5, p );
+0044                 Model_Group = all_struct.loizos;
+0045           [ er, param, p ] = angleModelFeaturesCreator( er, param, Model_Group, angles{1,aX}, 6, p );
+0046                 Model_Group = all_struct.xristos;
+0047           [ er, param, p ] = angleModelFeaturesCreator( er, param, Model_Group, angles{1,aX}, 7, p );
+0048       display(<span class="string">'good'</span>);
+0049       <span class="keyword">end</span>
+0050       <span class="keyword">if</span> (strcmp(type,<span class="string">'bad'</span>)) || (strcmp(type,<span class="string">'ugly'</span>))
+0051           Model_Group = all_struct_bad.violaris;
+0052           [ er, param, p ] = angleModelFeaturesCreator( er, param, Model_Group, angles{1,aX}, 0, p );
+0053           Model_Group = all_struct_bad.theo;
+0054           [ er, param, p ] = angleModelFeaturesCreator( er, param, Model_Group, angles{1,aX}, 1, p ); 
+0055           Model_Group = all_struct_bad.kotsios;
+0056           [ er, param, p ] = angleModelFeaturesCreator( er, param, Model_Group, angles{1,aX}, 2, p );
+0057                 Model_Group = all_struct_bad.harold;
+0058           [ er, param, p ] = angleModelFeaturesCreator( er, param, Model_Group, angles{1,aX}, 3, p );
+0059                 Model_Group = all_struct_bad.aadil;
+0060           [ er, param, p ] = angleModelFeaturesCreator( er, param, Model_Group, angles{1,aX}, 4, p );
+0061                 Model_Group = all_struct_bad.yiannis;
+0062           [ er, param, p ] = angleModelFeaturesCreator( er, param, Model_Group, angles{1,aX}, 5, p );
+0063                 Model_Group = all_struct_bad.loizos;
+0064           [ er, param, p ] = angleModelFeaturesCreator( er, param, Model_Group, angles{1,aX}, 6, p );
+0065                 Model_Group = all_struct_bad.xristos;
+0066           [ er, param, p ] = angleModelFeaturesCreator( er, param, Model_Group, angles{1,aX}, 7, p );
+0067        display(<span class="string">'bad'</span>);
+0068       <span class="keyword">end</span>
+0069       <span class="comment">%Normalise otherwise!!!:p find max of all and use it always by that</span>
+0070       <span class="comment">%in all values</span>
+0071     <span class="comment">%for t=1:size(param,2)-1</span>
+0072     <span class="comment">%    temp = max(abs(param(:,t)));</span>
+0073     <span class="comment">%    if temp ~=0</span>
+0074     <span class="comment">%        param(:,t)= param(:,t)/temp;</span>
+0075     <span class="comment">%    end</span>
+0076     <span class="comment">%end</span>
+0077 
+0078     name = strcat(<span class="string">'angle'</span>, num2str(angles{1,aX}(1,1)),num2str(angles{1,aX}(1,2)),num2str(angles{1,aX}(1,3)),type, <span class="string">'.csv'</span>);
+0079     cell2csv(name, num2cell(param));
+0080  <span class="keyword">end</span>
+0081 <span class="keyword">end</span>
+0082</pre></div>
+<hr><address>Generated on Thu 07-Jun-2012 12:09:53 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

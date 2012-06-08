@@ -3,8 +3,8 @@ clear all
 %load carsmall
 %load('paramAngle.mat')
 %load('paramAngle2.mat');
-parma=load('lap-model-significant-users.csv');
-
+parma=load('angle111goodPCA6.csv');
+%load('C:\Users\The0s\Desktop\Project Files\Project\DriverSim\matlab\data\matlab_file\paramAngle.mat')
 class={'violaris' 0;
        'theo' 1;
        'kotsios' 2;
@@ -56,4 +56,6 @@ prediction = eval(tt, inst)
 
 
 TreeObject=TreeBagger(100,x,y,'method','classification','NVarToSample','all');
+fyPredicted = predict(TreeObject, x);
+fcm = confusionmat(y,fyPredicted);           %# confusion matrix
 [YFIT,scores] = predict(TreeObject,inst)

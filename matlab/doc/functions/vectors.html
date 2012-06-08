@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of vectors</title>
+  <meta name="keywords" content="vectors">
+  <meta name="description" content="VECTORS create vectors on 3d consequtive points inserted">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">functions</a> &gt; vectors.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for functions&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>vectors
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>VECTORS create vectors on 3d consequtive points inserted</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function [dir_vect, pos] = vectors(position3d, merge_no, plotting) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment">VECTORS create vectors on 3d consequtive points inserted
+   position3d -&gt; 3xm  matrix where m is the number of points
+   merge_no -&gt; number of points to merge (EVEN)</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="overlap_average.html" class="code" title="function [ data, variance ] = overlap_average( data, no, overlap )">overlap_average</a>	OVERLAP_AVERAGE Average the data give by creating overlapping decimations</li><li><a href="plot_vector.html" class="code" title="function [ output_args ] = plot_vector( vectors, points, colour )">plot_vector</a>	PLOT_VECTOR Plot vector lines using direction vectors and points</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="lap_structure.html" class="code" title="function [ indexa ] = lap_structure( filename, vectors_merge_no,angles_block_no )">lap_structure</a>	LAP_STUCTURE Creates a structure of the Track entered</li><li><a href="plot_vector.html" class="code" title="function [ output_args ] = plot_vector( vectors, points, colour )">plot_vector</a>	PLOT_VECTOR Plot vector lines using direction vectors and points</li><li><a href="user_structure.html" class="code" title="function [ indexa ] = user_structure(  filename, vectors_merge_no,angles_block_no, plotting, instance )">user_structure</a>	USER_STRUCTURE Creates a structure of the Track entered</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [dir_vect, pos] = vectors(position3d, merge_no, plotting)</a>
+0002 <span class="comment">%VECTORS create vectors on 3d consequtive points inserted</span>
+0003 <span class="comment">%   position3d -&gt; 3xm  matrix where m is the number of points</span>
+0004 <span class="comment">%   merge_no -&gt; number of points to merge (EVEN)</span>
+0005 
+0006 <span class="keyword">if</span> ~exist(<span class="string">'plotting'</span>, <span class="string">'var'</span>)
+0007     plotting = <span class="string">'y'</span>;
+0008 <span class="keyword">end</span>
+0009 
+0010 n=length(position3d);
+0011 x= position3d(1,:);
+0012 y= position3d(2,:);
+0013 z= position3d(3,:);
+0014 dir_vect=[];
+0015 <span class="keyword">if</span> plotting==<span class="string">'y'</span>
+0016     figure
+0017 <span class="keyword">end</span>
+0018 
+0019 <span class="keyword">for</span> f=1:n-1;
+0020     g= -200:100:200;
+0021     i = x(f) + g*(x(f+1)-x(f)); 
+0022     j = y(f) + g*(y(f+1)-y(f));
+0023     k = z(f) + g*(z(f+1)-z(f));
+0024     <span class="comment">%plot3(i,j,k,'y');</span>
+0025     dir_vect(:,f) = position3d(:,f+1)-position3d(:,f);
+0026     <span class="comment">%vect =  position3d(:,f) + (position3d(:,f+1)-position3d(:,f))*g;</span>
+0027     <span class="comment">%plot3(vect(1,:),vect(2,:),vect(3,:),'y');</span>
+0028     hold on
+0029 <span class="keyword">end</span>
+0030 
+0031 <span class="keyword">if</span> plotting==<span class="string">'y'</span>
+0032     plot3(x,z,y,<span class="string">'r'</span>);
+0033     hold on
+0034 <span class="keyword">end</span>
+0035 
+0036 [s,v1]=<a href="overlap_average.html" class="code" title="function [ data, variance ] = overlap_average( data, no, overlap )">overlap_average</a>(dir_vect,merge_no,floor(merge_no/2));
+0037 [pos,p_var]=<a href="overlap_average.html" class="code" title="function [ data, variance ] = overlap_average( data, no, overlap )">overlap_average</a>(position3d,merge_no,floor(merge_no/2));
+0038 
+0039 <span class="keyword">if</span> plotting==<span class="string">'y'</span>
+0040     a=0;
+0041     <span class="keyword">for</span> f=1:length(s);
+0042         <span class="keyword">if</span> a&lt;=0<span class="comment">%12??</span>
+0043             <a href="plot_vector.html" class="code" title="function [ output_args ] = plot_vector( vectors, points, colour )">plot_vector</a>(s(:,f),pos(:,f),<span class="string">'g'</span>);
+0044             a=a+1;
+0045         <span class="keyword">else</span>
+0046            <a href="plot_vector.html" class="code" title="function [ output_args ] = plot_vector( vectors, points, colour )">plot_vector</a>(s(:,f),pos(:,f),<span class="string">'b'</span>);
+0047            a=a+1;
+0048         <span class="keyword">end</span>
+0049         hold on
+0050 
+0051         <span class="keyword">if</span> a==2<span class="comment">%24???</span>
+0052             a=0;
+0053         <span class="keyword">end</span>
+0054 
+0055     <span class="keyword">end</span>
+0056 <span class="keyword">end</span>
+0057 dir_vect=s;
+0058 
+0059 <span class="keyword">end</span>
+0060</pre></div>
+<hr><address>Generated on Thu 07-Jun-2012 12:09:53 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

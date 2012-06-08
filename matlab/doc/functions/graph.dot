@@ -1,0 +1,58 @@
+/* Created by mdot for Matlab */
+digraph m2html {
+  RacerToMatlab -> loadRacerFile;
+  RacerToMatlabPlotting -> RacerToMatlab;
+  angleModelFeaturesCreator -> raw2model;
+  angles -> weight_average;
+  anglesOntrack -> angles;
+  create_training_data -> RacerToMatlab;
+  create_training_data -> track_decimation;
+  cut_data -> loadRacerFile;
+  lap_structure -> RacerToMatlab;
+  lap_structure -> angles;
+  lap_structure -> anglesOntrack;
+  lap_structure -> vectors;
+  plot_vector -> vectors;
+  raw2model -> rms_s;
+  user_inputs -> RacerToMatlab;
+  user_inputs -> overlap_average;
+  user_inputs_only_on_track -> RacerToMatlab;
+  user_inputs_only_on_track -> overlap_average;
+  user_structure -> RacerToMatlab;
+  user_structure -> angles;
+  user_structure -> anglesOntrack;
+  user_structure -> vectors;
+  vectors -> overlap_average;
+  vectors -> plot_vector;
+
+  ModelCreation [URL="ModelCreation.html"];
+  ModelCreationHMM [URL="ModelCreationHMM.html"];
+  ModelGroupCreation [URL="ModelGroupCreation.html"];
+  RacerToMatlab [URL="RacerToMatlab.html"];
+  RacerToMatlabPlotting [URL="RacerToMatlabPlotting.html"];
+  angleModelFeaturesCreator [URL="angleModelFeaturesCreator.html"];
+  angles [URL="angles.html"];
+  anglesOntrack [URL="anglesOntrack.html"];
+  assing_angles [URL="assing_angles.html"];
+  assing_angles_using_means [URL="assing_angles_using_means.html"];
+  cell2csv [URL="cell2csv.html"];
+  create_training_data [URL="create_training_data.html"];
+  cut_data [URL="cut_data.html"];
+  decisionTree [URL="decisionTree.html"];
+  lap_structure [URL="lap_structure.html"];
+  loadRacerFile [URL="loadRacerFile.html"];
+  overlap_average [URL="overlap_average.html"];
+  plot_vector [URL="plot_vector.html"];
+  randomForest [URL="randomForest.html"];
+  raw2model [URL="raw2model.html"];
+  rms_s [URL="rms_s.html"];
+  rounding_angles [URL="rounding_angles.html"];
+  tangents [URL="tangents.html"];
+  testModelGroupwithLap [URL="testModelGroupwithLap.html"];
+  track_decimation [URL="track_decimation.html"];
+  user_inputs [URL="user_inputs.html"];
+  user_inputs_only_on_track [URL="user_inputs_only_on_track.html"];
+  user_structure [URL="user_structure.html"];
+  vectors [URL="vectors.html"];
+  weight_average [URL="weight_average.html"];
+}

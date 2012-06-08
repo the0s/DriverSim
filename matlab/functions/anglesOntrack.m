@@ -7,8 +7,9 @@ if ~exist('plotting', 'var')
 end
 
 block_vect=floor(angles_block_no/2);
-block_pos = floor(vectors_merge_no/2) * block_vect;
-
+%block_pos = floor(vectors_merge_no/2) * block_vect;
+block_pos = floor(((vectors_merge_no + ((angles_block_no-1)*(vectors_merge_no/2)))+1));
+overlap = floor((vectors_merge_no/2) * (angles_block_no/2));
 %for x=1:length(angles)
 %indexa{1,x} = angles(x);
 %end
@@ -22,16 +23,17 @@ z=z+1;
 end
 
 z=1;
-for x=block_pos:block_pos:length(position3d)-block_pos %SASTOOO ??
-pos3d{1,z} = position3d(:,x-(block_pos-1):x+block_pos);    
-max_min{1,z} = [min(position3d(1, x-(block_pos-1):x+block_pos)) max(position3d(1, x-(block_pos-1):x+block_pos));
-               min(position3d(2, x-(block_pos-1):x+block_pos)) max(position3d(2, x-(block_pos-1):x+block_pos));
-               min(position3d(3, x-(block_pos-1):x+block_pos)) max(position3d(3, x-(block_pos-1):x+block_pos))
+for x=1:overlap:length(position3d)-block_pos 
+pos3d{1,z} = position3d(:,x:x+block_pos);    
+
+max_min{1,z} = [min(position3d(1, x:x+block_pos)) max(position3d(1, x:x+block_pos));
+               min(position3d(2, x:x+block_pos)) max(position3d(2, x:x+block_pos));
+               min(position3d(3, x:x+block_pos)) max(position3d(3, x:x+block_pos))
               ]; 
           
-mean_var{1,z} = [mean(position3d(1, x-(block_pos-1):x+block_pos)) var(position3d(1, x-(block_pos-1):x+block_pos));
-               mean(position3d(2, x-(block_pos-1):x+block_pos)) var(position3d(2, x-(block_pos-1):x+block_pos));
-               mean(position3d(3, x-(block_pos-1):x+block_pos)) var(position3d(3, x-(block_pos-1):x+block_pos))
+mean_var{1,z} = [mean(position3d(1, x:x+block_pos)) var(position3d(1, x:x+block_pos));
+               mean(position3d(2, x:x+block_pos)) var(position3d(2, x:x+block_pos));
+               mean(position3d(3, x:x+block_pos)) var(position3d(3, x:x+block_pos))
               ];           
 
 %subplot(2,1,1)

@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of plot_vector</title>
+  <meta name="keywords" content="plot_vector">
+  <meta name="description" content="PLOT_VECTOR Plot vector lines using direction vectors and points">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">functions</a> &gt; plot_vector.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for functions&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>plot_vector
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>PLOT_VECTOR Plot vector lines using direction vectors and points</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function [ output_args ] = plot_vector( vectors, points, colour ) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment">PLOT_VECTOR Plot vector lines using direction vectors and points 
+Line = point + g(direction vector)
+   vectors =  is a matrix of 3d direction vector values, 3xm where m is the number of
+   vectors given
+   points = points of the direction vectors given to create the lines</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="vectors.html" class="code" title="function [dir_vect, pos] = vectors(position3d, merge_no, plotting)">vectors</a>	VECTORS create vectors on 3d consequtive points inserted</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="vectors.html" class="code" title="function [dir_vect, pos] = vectors(position3d, merge_no, plotting)">vectors</a>	VECTORS create vectors on 3d consequtive points inserted</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [ output_args ] = plot_vector( vectors, points, colour )</a>
+0002 <span class="comment">%PLOT_VECTOR Plot vector lines using direction vectors and points</span>
+0003 <span class="comment">%Line = point + g(direction vector)</span>
+0004 <span class="comment">%   vectors =  is a matrix of 3d direction vector values, 3xm where m is the number of</span>
+0005 <span class="comment">%   vectors given</span>
+0006 <span class="comment">%   points = points of the direction vectors given to create the lines</span>
+0007 
+0008 <span class="keyword">if</span> ~exist(<span class="string">'colour'</span>, <span class="string">'var'</span>)
+0009     colour = <span class="string">'r'</span>;
+0010 <span class="keyword">end</span>
+0011 
+0012 colour2=<span class="string">'c'</span>;
+0013 
+0014 <span class="keyword">for</span> f=1:size(<a href="vectors.html" class="code" title="function [dir_vect, pos] = vectors(position3d, merge_no, plotting)">vectors</a>,2);
+0015     g= -100:100:100;
+0016     i = points(1,f) + g*(<a href="vectors.html" class="code" title="function [dir_vect, pos] = vectors(position3d, merge_no, plotting)">vectors</a>(1,f)); 
+0017     j = points(2,f) + g*(<a href="vectors.html" class="code" title="function [dir_vect, pos] = vectors(position3d, merge_no, plotting)">vectors</a>(2,f));
+0018     k = points(3,f) + g*(<a href="vectors.html" class="code" title="function [dir_vect, pos] = vectors(position3d, merge_no, plotting)">vectors</a>(3,f));
+0019     plot3(i,k,j,colour);
+0020     hold on
+0021     plot3(points(1,f),points(3,f),points(2,f),colour2);
+0022     hold on
+0023 <span class="keyword">end</span>
+0024 <span class="keyword">end</span>
+0025</pre></div>
+<hr><address>Generated on Thu 07-Jun-2012 12:09:53 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

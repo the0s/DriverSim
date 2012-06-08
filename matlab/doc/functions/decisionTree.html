@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of decisionTree</title>
+  <meta name="keywords" content="decisionTree">
+  <meta name="description" content="DESICIONTREE Enter angle to get training data and instance to get">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">functions</a> &gt; decisionTree.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for functions&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>decisionTree
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>DESICIONTREE Enter angle to get training data and instance to get</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function [ prediction ] = decisionTree( angle_var, type, instance ) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment">DESICIONTREE Enter angle to get training data and instance to get
+prediction with a decision tree
+   Detailed explanation goes here</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [ prediction ] = decisionTree( angle_var, type, instance )</a>
+0002 <span class="comment">%DESICIONTREE Enter angle to get training data and instance to get</span>
+0003 <span class="comment">%prediction with a decision tree</span>
+0004 <span class="comment">%   Detailed explanation goes here</span>
+0005 
+0006 <span class="comment">%# load data</span>
+0007 <span class="comment">%clear all</span>
+0008 
+0009 <span class="comment">%parma=load('angle402020.csv');</span>
+0010 name = strcat(<span class="string">'angle'</span>, num2str(angle_var(1,1)),num2str(angle_var(1,2)),num2str(angle_var(1,3)),type, <span class="string">'.csv'</span>);
+0011 <span class="keyword">try</span>
+0012 parma=load(name);
+0013 <span class="keyword">catch</span> err
+0014     display(err.message);
+0015     prediction = [];
+0016 <span class="keyword">return</span> ;
+0017 <span class="keyword">end</span>
+0018 
+0019 
+0020 classNO= [ 0; 1; 2; 3; 4; 5;6;7];
+0021 className = {<span class="string">'viol'</span>; <span class="string">'theo'</span>; <span class="string">'kots'</span>; <span class="string">'haro'</span>;<span class="string">'aadi'</span>; <span class="string">'yian'</span>; <span class="string">'loiz'</span>; <span class="string">'xris'</span>};
+0022    
+0023 <span class="keyword">for</span> d=1:size(parma,1)
+0024     <span class="keyword">for</span> p=1:size(classNO,1)
+0025         <span class="keyword">if</span> parma(d,size(parma,2)) == classNO(p,1)
+0026             y(d,1) = className(p); 
+0027         <span class="keyword">end</span>
+0028     <span class="keyword">end</span>
+0029 <span class="keyword">end</span>
+0030 <span class="comment">%# construct predicting attributes and target class</span>
+0031 x= parma(:,1:size(parma,2)-1);
+0032 y = strcat(y,{});
+0033 
+0034 <span class="comment">%# train classification decision tree</span>
+0035 t = classregtree(x, y, <span class="string">'method'</span>,<span class="string">'classification'</span>,  <span class="keyword">...</span>
+0036                  <span class="string">'prune'</span>,<span class="string">'on'</span>);
+0037              <span class="comment">%'categorical', [2 4],</span>
+0038 <span class="comment">%view(t)</span>
+0039 
+0040 
+0041 
+0042 <span class="comment">%# test</span>
+0043 yPredicted = eval(t, x);
+0044 cm = confusionmat(y,yPredicted);           <span class="comment">%# confusion matrix</span>
+0045 N = sum(cm(:));
+0046 err = ( N-sum(diag(cm)) ) / N;             <span class="comment">%# testing error</span>
+0047 
+0048 <span class="comment">%# prune tree to avoid overfitting</span>
+0049 tt = prune(t, <span class="string">'level'</span>,2);
+0050 <span class="comment">%view(tt)</span>
+0051 
+0052 <span class="comment">%# predict a new unseen instance</span>
+0053 prediction = eval(tt, instance);
+0054 <span class="keyword">end</span>
+0055</pre></div>
+<hr><address>Generated on Thu 07-Jun-2012 12:09:53 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

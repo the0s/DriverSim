@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of update_carphysics</title>
+  <meta name="keywords" content="update_carphysics">
+  <meta name="description" content="INCOPLETE">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">other</a> &gt; update_carphysics.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for other&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>update_carphysics
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>INCOPLETE</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function [ position,velocity] = update_carphysics( position, velocity, brake , gas, steering, time, acceleration, glat, glong, speed) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment">INCOPLETE
+CARPHYSICS Its a function simulating the next movement of the car on user input
+   Detailed explanation goes here
+http://www.asawicki.info/Mirror/Car%20Physics%20for%20Games/Car%20Physics%20for%20Games.html</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [ position,velocity] = update_carphysics( position, velocity, brake , gas, steering, time, acceleration, glat, glong, speed)</a>
+0002 
+0003 <span class="comment">%INCOPLETE</span>
+0004 <span class="comment">%CARPHYSICS Its a function simulating the next movement of the car on user input</span>
+0005 <span class="comment">%   Detailed explanation goes here</span>
+0006 <span class="comment">%http://www.asawicki.info/Mirror/Car%20Physics%20for%20Games/Car%20Physics%20for%20Games.html</span>
+0007 u= [0;0;0];
+0008 br= brake;
+0009 C_braking = brake;
+0010 EngineForce= gas;
+0011 area = 2.2; <span class="comment">%area infront of car</span>
+0012 Coef_friction= 0.3; <span class="comment">%wind tunnel tests</span>
+0013 density = 1.29; <span class="comment">%density of air</span>
+0014 C_drag = 0.5 * Coef_friction * area * density;
+0015 C_rr = 30*C_drag;
+0016 mass = 100;
+0017 g= 9.81;
+0018 dt = time; <span class="comment">%in seconds</span>
+0019 <span class="comment">%speed = norm(velocity)</span>
+0020 <span class="comment">%%simple case  b = c = L/2</span>
+0021 mu =1.3;  <span class="comment">%mu is the friction coefficient of the tyre. For street tyres this may be 1.0, for racing car tyres this can get as high as 1.5</span>
+0022 b=1.5; <span class="comment">%b is the distance from CG to front axle</span>
+0023 c = 1; <span class="comment">% the distance from CG to rear axle</span>
+0024 L = 0.3; <span class="comment">% L is the wheelbase</span>
+0025 h =0.5; <span class="comment">%h is the height of the CG</span>
+0026 rpm_inters_torque = 5252; <span class="comment">%V8 engine found in Corvette</span>
+0027  
+0028  
+0029 <span class="comment">%%Velocity</span>
+0030 velocity = velocity + (dt * acceleration);
+0031 
+0032 <span class="comment">%%Car position</span>
+0033 position = position + (dt * velocity); 
+0034  
+0035 <span class="comment">%%Calculate Total Longitudinal Force</span>
+0036 F_traction = u * EngineForce;
+0037 F_drag = -C_drag * velocity * norm(velocity) ;
+0038 F_rr = -C_rr * velocity;
+0039 F_braking = u * (-C_braking ) ;
+0040 
+0041 F_long = F_traction + F_braking + F_drag + F_rr;
+0042 <span class="comment">%F_long = glong;</span>
+0043 
+0044 <span class="comment">%%Net FOrce acting on the car</span>
+0045 Net_Force = mass * acceleration;
+0046 
+0047 
+0048 
+0049 
+0050 
+0051 
+0052 <span class="keyword">end</span>
+0053</pre></div>
+<hr><address>Generated on Thu 07-Jun-2012 12:09:53 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

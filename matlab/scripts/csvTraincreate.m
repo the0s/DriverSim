@@ -32,7 +32,7 @@ end
 %        param(:,t)= param(:,t)/temp;
 %    end
 %end
-cell2csv('not-norm.csv', num2cell(param));
+cell2csv('laps.csv', num2cell(param));
 
 end
     

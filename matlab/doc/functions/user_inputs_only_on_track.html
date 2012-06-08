@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of user_inputs_only_on_track</title>
+  <meta name="keywords" content="user_inputs_only_on_track">
+  <meta name="description" content="USER_INPUTS_ONLY_ON_TRACK Summary of this function goes here">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">functions</a> &gt; user_inputs_only_on_track.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for functions&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>user_inputs_only_on_track
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>USER_INPUTS_ONLY_ON_TRACK Summary of this function goes here</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function [ usr_input,variance,lapTime ] = user_inputs_only_on_track( filename ) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment">USER_INPUTS_ONLY_ON_TRACK Summary of this function goes here
+   Detailed explanation goes here</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="RacerToMatlab.html" class="code" title="function [A,check, speed, brakes,gas,clutch,gear,lapdistance,time, position3d, acceleration3d,steering, gForceLat,gForceLong,handbrake,lapTime] = RacerToMatlab(filename, instance)">RacerToMatlab</a>	Convert Racer text to variable arrays</li><li><a href="overlap_average.html" class="code" title="function [ data, variance ] = overlap_average( data, no, overlap )">overlap_average</a>	OVERLAP_AVERAGE Average the data give by creating overlapping decimations</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [ usr_input,variance,lapTime ] = user_inputs_only_on_track( filename )</a>
+0002 <span class="comment">%USER_INPUTS_ONLY_ON_TRACK Summary of this function goes here</span>
+0003 <span class="comment">%   Detailed explanation goes here</span>
+0004 
+0005     Optimal_sampling_rate = 0.1;
+0006 
+0007     [~,check, speed, brakes,gas,clutch,gear,~,time, position3d, ~,steering, ~,~,handbrake,lapTime] = <a href="RacerToMatlab.html" class="code" title="function [A,check, speed, brakes,gas,clutch,gear,lapdistance,time, position3d, acceleration3d,steering, gForceLat,gForceLong,handbrake,lapTime] = RacerToMatlab(filename, instance)">RacerToMatlab</a>(filename);
+0008     time = time/1000;
+0009     
+0010     dt = (time(11)-time(1))/10;
+0011     
+0012      
+0013     usr_input = [gas; brakes; steering; gear;speed; time; check];
+0014     
+0015        
+0016     variance=[];
+0017     
+0018     
+0019     <span class="comment">%%Sampling faster than 0.1</span>
+0020     samples= round(Optimal_sampling_rate/dt);
+0021     
+0022     <span class="keyword">if</span> samples&gt;1
+0023         samples_to_average = 2*samples;
+0024         samples_to_overlap = samples;
+0025         [usr_input,variance]=<a href="overlap_average.html" class="code" title="function [ data, variance ] = overlap_average( data, no, overlap )">overlap_average</a>(usr_input,samples_to_average,samples_to_overlap);
+0026     <span class="keyword">end</span>  
+0027     
+0028     p=1;
+0029     <span class="keyword">for</span> k = 1:size(usr_input,2)
+0030         <span class="keyword">if</span> usr_input(7,k) == 0 
+0031             temp(:,p) = usr_input(:,k);
+0032             p=p+1;
+0033         <span class="keyword">end</span>   
+0034     <span class="keyword">end</span>
+0035     usr_input=temp;
+0036     
+0037 <span class="keyword">end</span>
+0038</pre></div>
+<hr><address>Generated on Thu 07-Jun-2012 12:09:53 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

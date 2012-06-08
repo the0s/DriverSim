@@ -1,0 +1,145 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of mineKalmanvalues</title>
+  <meta name="keywords" content="mineKalmanvalues">
+  <meta name="description" content="Playing with kalman nija code">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">other</a> &gt; mineKalmanvalues.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for other&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>mineKalmanvalues
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>Playing with kalman nija code</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment">Playing with kalman nija code</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <span class="comment">%Playing with kalman nija code</span>
+0002 
+0003 <span class="comment">%% define our meta-variables (i.e. how long and often we will sample)</span>
+0004 duration = 10  <span class="comment">%how long the Quail flies</span>
+0005 dt = .1;  <span class="comment">%The Ninja continuously looks for the birdy,</span>
+0006 <span class="comment">%but we'll assume he's just repeatedly sampling over time at a fixed interval</span>
+0007 
+0008 <span class="comment">%% Define update equations (Coefficent matrices): A physics based model for where we expect the Quail to be [state transition (state + velocity)] + [input control (acceleration)]</span>
+0009 A = [1 dt; 0 1] ; <span class="comment">% state transition matrix:  expected flight of the Quail (state prediction)</span>
+0010 B = [dt^2/2; dt]; <span class="comment">%input control matrix:  expected effect of the input accceleration on the state.</span>
+0011 C = [1 0]; <span class="comment">% measurement matrix: the expected measurement given the predicted state (likelihood)</span>
+0012 <span class="comment">%since we are only measuring position (too hard for the ninja to calculate speed), we set the velocity variable to</span>
+0013 <span class="comment">%zero.</span>
+0014 
+0015 <span class="comment">%% define main variables</span>
+0016 u = 1.5; <span class="comment">% define acceleration magnitude</span>
+0017 Q= [0; 0]; <span class="comment">%initized state--it has two components: [position; velocity] of the Quail</span>
+0018 Q_estimate = Q;  <span class="comment">%x_estimate of initial location estimation of where the Quail is (what we are updating)</span>
+0019 QuailAccel_noise_mag = 0.05; <span class="comment">%process noise: the variability in how fast the Quail is speeding up (stdv of acceleration: meters/sec^2)</span>
+0020 NinjaVision_noise_mag = 10;  <span class="comment">%measurement noise: How mask-blinded is the Ninja (stdv of location, in meters)</span>
+0021 Ez = NinjaVision_noise_mag^2;<span class="comment">% Ez convert the measurement noise (stdv) into covariance matrix</span>
+0022 Ex = QuailAccel_noise_mag^2 * [dt^4/4 dt^3/2; dt^3/2 dt^2]; <span class="comment">% Ex convert the process noise (stdv) into covariance matrix</span>
+0023 P = Ex; <span class="comment">% estimate of initial Quail position variance (covariance matrix)</span>
+0024 
+0025 <span class="comment">%% initize result variables</span>
+0026 <span class="comment">% Initialize for speed</span>
+0027 Q_loc = []; <span class="comment">% ACTUAL Quail flight path</span>
+0028 vel = []; <span class="comment">% ACTUAL Quail velocity</span>
+0029 Q_loc_meas = []; <span class="comment">% Quail path that the Ninja sees</span>
+0030 
+0031 
+0032 <span class="comment">%% simulate what the Ninja sees over time</span>
+0033 figure(2);clf
+0034 figure(1);clf
+0035 <span class="keyword">for</span> t = 0 : dt: duration
+0036 
+0037     <span class="comment">% Generate the Quail flight</span>
+0038     QuailAccel_noise = QuailAccel_noise_mag * [(dt^2/2)*randn; dt*randn];
+0039     Q= A * Q+ B * u + QuailAccel_noise;
+0040     <span class="comment">% Generate what the Ninja sees</span>
+0041     NinjaVision_noise = NinjaVision_noise_mag * randn;
+0042     y = C * Q+ NinjaVision_noise;
+0043     Q_loc = [Q_loc; Q(1)];
+0044     Q_loc_meas = [Q_loc_meas; y];
+0045     vel = [vel; Q(2)];
+0046     <span class="comment">%iteratively plot what the ninja sees</span>
+0047     plot(0:dt:t, Q_loc, <span class="string">'-r.'</span>)
+0048     plot(0:dt:t, Q_loc_meas, <span class="string">'-k.'</span>)
+0049     axis([0 10 -30 80])
+0050     hold on
+0051     <span class="comment">%pause</span>
+0052 <span class="keyword">end</span>
+0053 
+0054 <span class="comment">%plot theoretical path of ninja that doesn't use kalman</span>
+0055 plot(0:dt:t, smooth(Q_loc_meas), <span class="string">'-g.'</span>)
+0056 
+0057 <span class="comment">%plot velocity, just to show that it's constantly increasing, due to</span>
+0058 <span class="comment">%constant acceleration</span>
+0059 <span class="comment">%figure(2);</span>
+0060 <span class="comment">%plot(0:dt:t, vel, '-b.')</span>
+0061 
+0062 
+0063 <span class="comment">%% Do kalman filtering</span>
+0064 <span class="comment">%initize estimation variables</span>
+0065 Q_loc_estimate = []; <span class="comment">%  Quail position estimate</span>
+0066 vel_estimate = []; <span class="comment">% Quail velocity estimate</span>
+0067 Q= [0; 0]; <span class="comment">% re-initized state</span>
+0068 P_estimate = P;
+0069 P_mag_estimate = [];
+0070 predic_state = [];
+0071 predic_var = [];
+0072 <span class="keyword">for</span> t = 1:length(Q_loc)
+0073     <span class="comment">% Predict next state of the quail with the last state and predicted motion.</span>
+0074     Q_estimate = A * Q_estimate + B * u;
+0075     predic_state = [predic_state; Q_estimate(1)] ;
+0076     <span class="comment">%predict next covariance</span>
+0077     P = A * P * A' + Ex;
+0078     predic_var = [predic_var; P] ;
+0079     <span class="comment">% predicted Ninja measurement covariance</span>
+0080     <span class="comment">% Kalman Gain</span>
+0081     K = P*C'*inv(C*P*C'+Ez);
+0082     <span class="comment">% Update the state estimate.</span>
+0083     Q_estimate = Q_estimate + K * (Q_loc_meas(t) - C * Q_estimate);
+0084     <span class="comment">% update covariance estimation.</span>
+0085     P =  (eye(2)-K*C)*P;
+0086     <span class="comment">%Store for plotting</span>
+0087     Q_loc_estimate = [Q_loc_estimate; Q_estimate(1)];
+0088     vel_estimate = [vel_estimate; Q_estimate(2)];
+0089     P_mag_estimate = [P_mag_estimate; P(1)]
+0090 <span class="keyword">end</span>
+0091 
+0092 <span class="comment">% Plot the results</span>
+0093 figure(2);
+0094 tt = 0 : dt : duration;
+0095 plot(tt,Q_loc,<span class="string">'-r.'</span>,tt,Q_loc_meas,<span class="string">'-k.'</span>, tt,Q_loc_estimate,<span class="string">'-g.'</span>);
+0096 axis([0 10 -30 80])
+0097 
+0098</pre></div>
+<hr><address>Generated on Thu 07-Jun-2012 12:09:53 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

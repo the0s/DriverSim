@@ -1,0 +1,154 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of udp_plotter</title>
+  <meta name="keywords" content="udp_plotter">
+  <meta name="description" content="UDP_PLOTTER_DEMO - Opens a figure and starts to listen for UDP packages to plot.">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">UDP_scripts</a> &gt; udp_plotter.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for UDP_scripts&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>udp_plotter
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>UDP_PLOTTER_DEMO - Opens a figure and starts to listen for UDP packages to plot.</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function udp_plotter(lport) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> UDP_PLOTTER_DEMO - Opens a figure and starts to listen for UDP packages to plot.
+ Syntax: 
+   UDP_PLOTTER_DEMO
+ or
+   UDP_PLOTTER_DEMO localport
+
+ This script is a demo that listen for a UDP packet (default port 3333) and 
+ uses PLOT to dplay the sequence of doubles in the packet.
+
+ (C) 2002 Peter Rydesäter</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function udp_plotter(lport)</a>
+0002 <span class="comment">% UDP_PLOTTER_DEMO - Opens a figure and starts to listen for UDP packages to plot.</span>
+0003 <span class="comment">% Syntax:</span>
+0004 <span class="comment">%   UDP_PLOTTER_DEMO</span>
+0005 <span class="comment">% or</span>
+0006 <span class="comment">%   UDP_PLOTTER_DEMO localport</span>
+0007 <span class="comment">%</span>
+0008 <span class="comment">% This script is a demo that listen for a UDP packet (default port 3333) and</span>
+0009 <span class="comment">% uses PLOT to dplay the sequence of doubles in the packet.</span>
+0010 <span class="comment">%</span>
+0011 <span class="comment">% (C) 2002 Peter Rydesäter</span>
+0012   
+0013   <span class="comment">% Add default argument</span>
+0014   <span class="keyword">if</span> nargin&lt;1, lport=7012; <span class="keyword">end</span>
+0015   <span class="comment">% Write help message</span>
+0016   disp <span class="string">' '</span>;
+0017   disp <span class="string">'To send packages to be plotted use e.g.'</span>;
+0018   disp(sprintf(<span class="string">'   Use:   udp_send_demo sin(0:0.1:6)  '</span>));
+0019   disp <span class="string">'or'</span>;
+0020   disp(sprintf(<span class="string">'   Use:   udp_send_demo sin(0:0.1:6)  HOSTNAME'</span>));
+0021   disp <span class="string">' '</span>;
+0022   disp <span class="string">'To send a package to be plotted'</span>;
+0023   <span class="comment">% Open figure window</span>
+0024   fg=figure;
+0025   clf; axis; drawnow;
+0026   <span class="comment">% Open  udpsocket and bind udp port adress to it.</span>
+0027   udp=pnet(<span class="string">'udpsocket'</span>,lport);
+0028   <span class="comment">% Use timeout to not block forever, makes it possible to update resized window.</span>
+0029  p=1;
+0030   <span class="keyword">try</span>
+0031     <span class="keyword">while</span> p=&lt;1001,
+0032       <span class="comment">% Wait/Read udp packet to reed buffer</span>
+0033       len=pnet(udp,<span class="string">'readpacket'</span>);
+0034       <span class="keyword">if</span> len&gt;0,
+0035     <span class="comment">% if packet larger then 1 byte then read maximum of 1000 doubles in network byte order</span>
+0036     data=pnet(udp,<span class="string">'read'</span>,1000,<span class="string">'string'</span>);
+0037     figure(fg);
+0038     <span class="comment">% .... and plot doubles in axis.</span>
+0039     <span class="comment">%hold on</span>
+0040     data = strsplit(<span class="string">';'</span>,data);
+0041     
+0042     <span class="comment">%Text file data:Speed,brakes,gas,clutch,gear,distance,time, x, y ,z, x-acc, y-acc,z-acc,steering</span>
+0043     <span class="keyword">for</span> a=1:size(data,2)
+0044         dataplot(a,p)= str2double(data(a));
+0045     <span class="keyword">end</span>
+0046     p=p+1;
+0047     
+0048       <span class="keyword">end</span>
+0049       
+0050       <span class="keyword">if</span> mod(p,100) == 10010
+0051         subplot(3,3,1)
+0052         plot(dataplot(1,:));
+0053         drawnow; 
+0054         subplot(3,3,2)
+0055         plot(dataplot(2,:));
+0056         drawnow; 
+0057         subplot(3,3,3)
+0058         plot(dataplot(3,:));
+0059         drawnow;  
+0060                 subplot(3,3,4)
+0061         plot(dataplot(4,:));
+0062         drawnow;  
+0063                 subplot(3,3,5)
+0064         plot(dataplot(5,:));
+0065         drawnow;  
+0066                 subplot(3,3,6)
+0067         plot(dataplot(6,:));
+0068         drawnow;  
+0069          subplot(3,3,7)
+0070         plot(dataplot(7,:));
+0071         drawnow;
+0072          subplot(3,3,8)
+0073         plot(dataplot(8,:));
+0074         drawnow;
+0075          subplot(3,3,9)
+0076         plot(dataplot(9:11,:)');
+0077         drawnow;
+0078         
+0079         
+0080     <span class="keyword">end</span> 
+0081     
+0082     <span class="comment">%if p==10000</span>
+0083    <span class="comment">%     p=5000;</span>
+0084    <span class="comment">%     dataplot(:,1:5000)= dataplot(:,5000:10000);</span>
+0085    <span class="comment">%     dataplot(:,5000:10000) = 0;</span>
+0086    <span class="comment">% end</span>
+0087      
+0088     <span class="keyword">end</span>
+0089   <span class="keyword">catch</span> err
+0090      pnet(udp,<span class="string">'close'</span>);
+0091      delete(fg); 
+0092      display(err)
+0093     <span class="comment">% udp_plotter_demo;</span>
+0094   <span class="keyword">end</span>
+0095   <span class="comment">% On break or error close udpconnection and figure window.</span>
+0096   pnet(udp,<span class="string">'close'</span>);
+0097   delete(fg);
+0098   <span class="keyword">return</span>;</pre></div>
+<hr><address>Generated on Thu 07-Jun-2012 12:09:53 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of create_training_data</title>
+  <meta name="keywords" content="create_training_data">
+  <meta name="description" content="CREATE_TRAINING_DATA Convert Racer text file to multiple files according to track data">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">functions</a> &gt; create_training_data.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for functions&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>create_training_data
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>CREATE_TRAINING_DATA Convert Racer text file to multiple files according to track data</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function [ index ] = create_training_data(filename) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment">CREATE_TRAINING_DATA Convert Racer text file to multiple files according to track data
+Author: Theos
+Date: 11/03/2012</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="RacerToMatlab.html" class="code" title="function [A,check, speed, brakes,gas,clutch,gear,lapdistance,time, position3d, acceleration3d,steering, gForceLat,gForceLong,handbrake,lapTime] = RacerToMatlab(filename, instance)">RacerToMatlab</a>	Convert Racer text to variable arrays</li><li><a href="track_decimation.html" class="code" title="function [ index ] = track_decimation( distance )">track_decimation</a>	TRACK_DECIMATION returns the index of the starting and finishing values of</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [ index ] = create_training_data(filename)</a>
+0002 <span class="comment">%CREATE_TRAINING_DATA Convert Racer text file to multiple files according to track data</span>
+0003 <span class="comment">%Author: Theos</span>
+0004 <span class="comment">%Date: 11/03/2012</span>
+0005 
+0006     [A,~, ~, ~,~,~,~,lapdistance,~, ~, ~,~, ~,~,~,~] = <a href="RacerToMatlab.html" class="code" title="function [A,check, speed, brakes,gas,clutch,gear,lapdistance,time, position3d, acceleration3d,steering, gForceLat,gForceLong,handbrake,lapTime] = RacerToMatlab(filename, instance)">RacerToMatlab</a>(filename);
+0007     
+0008     index = <a href="track_decimation.html" class="code" title="function [ index ] = track_decimation( distance )">track_decimation</a>(lapdistance);
+0009     files_no= size(index,2)-1;
+0010     
+0011     <span class="keyword">for</span> x=1:files_no
+0012         file_name= strcat(filename(1:size(filename,2)-4),  num2str(x), <span class="string">'.txt'</span>);
+0013         fileID = fopen(file_name,<span class="string">'w'</span>);
+0014         A(:,index(x):index(x+1));
+0015         fprintf(fileID,<span class="string">'%g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g\r\n'</span>,A(:,index(x):index(x+1)));
+0016         fclose(fileID);
+0017     <span class="keyword">end</span>
+0018     
+0019 <span class="keyword">end</span>
+0020</pre></div>
+<hr><address>Generated on Thu 07-Jun-2012 12:09:53 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of weight_average</title>
+  <meta name="keywords" content="weight_average">
+  <meta name="description" content="WEIGHT_AVERAGE Weighted average on a vector according to their position">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">functions</a> &gt; weight_average.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for functions&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>weight_average
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>WEIGHT_AVERAGE Weighted average on a vector according to their position</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function [ w_average ] = weight_average( vector_no,n ) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment">WEIGHT_AVERAGE Weighted average on a vector according to their position
+(Higher weights for the numbers at start of the array)
+vector_no --&gt; vector with the numbers to average
+n --&gt; number of vectors to average from that vector (vectors with zero
+paddings should not be included in the weights)</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="angles.html" class="code" title="function [ angle_last ,angle_vector_consequtive,angle_cell,angle_sequences] = angles(direction_vectors,block,plotting)">angles</a>	ANGLES Find the angle in a block of direction vectors using weighted</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [ w_average ] = weight_average( vector_no,n )</a>
+0002 <span class="comment">%WEIGHT_AVERAGE Weighted average on a vector according to their position</span>
+0003 <span class="comment">%(Higher weights for the numbers at start of the array)</span>
+0004 <span class="comment">%vector_no --&gt; vector with the numbers to average</span>
+0005 <span class="comment">%n --&gt; number of vectors to average from that vector (vectors with zero</span>
+0006 <span class="comment">%paddings should not be included in the weights)</span>
+0007     x=n;
+0008     temp=0;
+0009     weightsum=0;
+0010 
+0011     <span class="keyword">for</span> g = 1 : x
+0012             temp = temp + vector_no(g)*(x-g+1);
+0013             weightsum = weightsum + (x-g+1);
+0014     <span class="keyword">end</span>
+0015     w_average = temp/weightsum;
+0016 
+0017 <span class="keyword">end</span>
+0018</pre></div>
+<hr><address>Generated on Thu 07-Jun-2012 12:09:53 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

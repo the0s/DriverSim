@@ -1,0 +1,163 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of udp_decision_tree</title>
+  <meta name="keywords" content="udp_decision_tree">
+  <meta name="description" content="function  udp_decision_tree(lport)">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">UDP_scripts</a> &gt; udp_decision_tree.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for UDP_scripts&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>udp_decision_tree
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function  udp_decision_tree(lport)</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment">function  udp_decision_tree(lport)
+ UDP_PLOTTER_DEMO - Opens a figure and starts to listen for UDP packages to plot.
+ Syntax: 
+   UDP_PLOTTER_DEMO
+ or
+   UDP_PLOTTER_DEMO localport
+
+ This script is a demo that listen for a UDP packet (default port 3333) and 
+ uses PLOT to dplay the sequence of doubles in the packet.
+
+ (C) 2002 Peter Rydesäter</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <span class="comment">%function  udp_decision_tree(lport)</span>
+0002 <span class="comment">% UDP_PLOTTER_DEMO - Opens a figure and starts to listen for UDP packages to plot.</span>
+0003 <span class="comment">% Syntax:</span>
+0004 <span class="comment">%   UDP_PLOTTER_DEMO</span>
+0005 <span class="comment">% or</span>
+0006 <span class="comment">%   UDP_PLOTTER_DEMO localport</span>
+0007 <span class="comment">%</span>
+0008 <span class="comment">% This script is a demo that listen for a UDP packet (default port 3333) and</span>
+0009 <span class="comment">% uses PLOT to dplay the sequence of doubles in the packet.</span>
+0010 <span class="comment">%</span>
+0011 <span class="comment">% (C) 2002 Peter Rydesäter</span>
+0012   load(<span class="string">'lapInfo.mat'</span>)
+0013   plotting = <span class="string">'n'</span>;
+0014   <span class="comment">% Add default argument</span>
+0015   lport=7012;
+0016   <span class="comment">%if nargin&lt;1, lport=7012; end</span>
+0017   <span class="comment">% Write help message</span>
+0018   disp <span class="string">' '</span>;
+0019   disp <span class="string">'To send packages to be plotted use e.g.'</span>;
+0020   disp(sprintf(<span class="string">'   Use:   udp_send_demo sin(0:0.1:6)  '</span>));
+0021   disp <span class="string">'or'</span>;
+0022   disp(sprintf(<span class="string">'   Use:   udp_send_demo sin(0:0.1:6)  HOSTNAME'</span>));
+0023   disp <span class="string">' '</span>;
+0024   disp <span class="string">'To send a package to be plotted'</span>;
+0025   <span class="comment">% Open figure window</span>
+0026   <span class="comment">%fg=figure;</span>
+0027   <span class="comment">%clf; axis; drawnow;</span>
+0028   <span class="comment">% Open  udpsocket and bind udp port adress to it.</span>
+0029   udp=pnet(<span class="string">'udpsocket'</span>,lport);
+0030   <span class="comment">% Use timeout to not block forever, makes it possible to update resized window.</span>
+0031  p=1;
+0032  f=1;
+0033  g=1;
+0034  s=1;
+0035   <span class="comment">%try</span>
+0036     <span class="keyword">while</span> 1,
+0037       <span class="comment">% Wait/Read udp packet to reed buffer</span>
+0038       len=pnet(udp,<span class="string">'readpacket'</span>);
+0039       <span class="keyword">if</span> len&gt;0,
+0040     <span class="comment">% if packet larger then 1 byte then read maximum of 1000 doubles in network byte order</span>
+0041     data=pnet(udp,<span class="string">'read'</span>,1000,<span class="string">'string'</span>);
+0042     <span class="comment">%figure(fg);</span>
+0043     <span class="comment">% .... and plot doubles in axis.</span>
+0044     <span class="comment">%hold on</span>
+0045     data = strsplit(<span class="string">';'</span>,data);
+0046     
+0047     <span class="comment">%Text file data:Speed,brakes,gas,clutch,gear,distance,time, x, y ,z, x-acc, y-acc,z-acc,steering</span>
+0048     <span class="keyword">for</span> a=1:size(data,2)
+0049         dataplot(a,p)= str2double(data(a));
+0050     <span class="keyword">end</span>
+0051     p=p+1;
+0052     
+0053       <span class="keyword">end</span>
+0054       <span class="keyword">try</span>
+0055       <span class="keyword">if</span> mod(p,400) == 0
+0056             display(<span class="string">'Predicting...'</span>);
+0057            [ Indexa2 ] = user_structure( dataplot, 20,12,plotting,<span class="string">'y'</span>); 
+0058            [Indexa_new] = assing_angles_using_means(Indexa,Indexa2,plotting);  
+0059            [User_Cell, User_Cell_Bad] = ModelCreation(Indexa_new);
+0060            <span class="keyword">if</span> size(User_Cell{1},1) ~= 0 
+0061                <span class="keyword">for</span> l=1:size(User_Cell,2)
+0062                    angle_var= User_Cell{3,l};
+0063                    instance= raw2model(User_Cell{2,l});          
+0064                    good = decisionTree(angle_var,<span class="string">'good'</span>,instance)
+0065                    prediction_good(f) = good;
+0066                    ugly = decisionTree(angle_var,<span class="string">'ugly'</span>,instance)
+0067                    prediction_ugly_G(s)= ugly;
+0068                    s=s+1;
+0069                    f=f+1;
+0070                <span class="keyword">end</span>          
+0071            <span class="keyword">end</span>
+0072            <span class="keyword">if</span> size(User_Cell_Bad{1},1) ~= 0 
+0073                <span class="keyword">for</span> l=1:size(User_Cell_Bad,2)
+0074                    angle_var= User_Cell_Bad{3,l};
+0075                    instance= raw2model(User_Cell_Bad{2,l});          
+0076                    bad = decisionTree(angle_var,<span class="string">'bad'</span>,instance)
+0077                    prediction_bad(f)= bad;
+0078                    g=g+1;
+0079                    ugly = decisionTree(angle_var,<span class="string">'ugly'</span>,instance)
+0080                    prediction_ugly_B(s)= ugly;
+0081                    s=s+1;
+0082                <span class="keyword">end</span>          
+0083            <span class="keyword">end</span>                         
+0084            dataplot=[];
+0085            p=1;
+0086       <span class="keyword">end</span> 
+0087       <span class="keyword">catch</span> err
+0088           display(err);
+0089       <span class="keyword">end</span>
+0090     <span class="comment">%if p==10000</span>
+0091    <span class="comment">%     p=5000;</span>
+0092    <span class="comment">%     dataplot(:,1:5000)= dataplot(:,5000:10000);</span>
+0093    <span class="comment">%     dataplot(:,5000:10000) = 0;</span>
+0094    <span class="comment">% end</span>
+0095      
+0096     <span class="keyword">end</span>
+0097   <span class="comment">%catch err</span>
+0098   <span class="comment">%   pnet(udp,'close');</span>
+0099   <span class="comment">%   delete(fg);</span>
+0100   <span class="comment">%   display(err)</span>
+0101     <span class="comment">% udp_plotter_demo;</span>
+0102   <span class="comment">%end</span>
+0103   <span class="comment">% On break or error close udpconnection and figure window.</span>
+0104   pnet(udp,<span class="string">'close'</span>);
+0105   delete(fg);
+0106   <span class="keyword">return</span>;</pre></div>
+<hr><address>Generated on Thu 07-Jun-2012 12:09:53 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

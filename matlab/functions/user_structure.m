@@ -16,13 +16,15 @@ function [ indexa ] = user_structure(  filename, vectors_merge_no,angles_block_n
 
 
 block_vect=floor(angles_block_no/2);
-block_pos = floor(vectors_merge_no/2) * block_vect;
+%block_pos = floor(vectors_merge_no/2) + block_vect;
+block_pos = floor(((vectors_merge_no + ((angles_block_no-1)*(vectors_merge_no/2)))+1));
+overlap = floor((vectors_merge_no/2) * (angles_block_no/2));
 
 z=1;
-usr_input = [gas; brakes; steering; gear;speed; time;];
-for x=block_pos:block_pos:length(position3d)-block_pos %SASTOOO
-usr_inp{1,z} = usr_input(:,x-(block_pos-1):x+block_pos);
-check_temp{1,z} = check(1,x-(block_pos-1):x+block_pos);
+usr_input = [gas; brakes; steering; gear; speed; time;];
+for x=1:overlap:length(position3d)-block_pos 
+usr_inp{1,z} = usr_input(:,x:x+block_pos);
+check_temp{1,z} = check(1,x:x+block_pos);
           z=z+1;
 end
 

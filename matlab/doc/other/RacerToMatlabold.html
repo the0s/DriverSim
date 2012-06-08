@@ -1,0 +1,168 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of RacerToMatlabold</title>
+  <meta name="keywords" content="RacerToMatlabold">
+  <meta name="description" content="Convert Racer text to variable arrays">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">other</a> &gt; RacerToMatlabold.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for other&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>RacerToMatlabold
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>Convert Racer text to variable arrays</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function [A,check, speed, brakes,gas,clutch,gear,lapdistance,time, position3d, acceleration3d,steering, gForceLat,gForceLong,handbrake,lapTime] = RacerToMatlabold(filename) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment">Convert Racer text to variable arrays
+Author: Theos
+22/02/2012
+Text file data:Speed,brakes,gas,clutch,gear,distance,time, x, y ,z, x-acc, y-acc,z-acc,steering</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <span class="comment">%Convert Racer text to variable arrays</span>
+0002 <span class="comment">%Author: Theos</span>
+0003 <span class="comment">%22/02/2012</span>
+0004 <span class="comment">%Text file data:Speed,brakes,gas,clutch,gear,distance,time, x, y ,z, x-acc, y-acc,z-acc,steering</span>
+0005 
+0006 <a name="_sub0" href="#_subfunctions" class="code">function [A,check, speed, brakes,gas,clutch,gear,lapdistance,time, position3d, acceleration3d,steering, gForceLat,gForceLong,handbrake,lapTime] = RacerToMatlabold(filename)</a>
+0007     fid = fopen(filename);
+0008     A = fscanf(fid,<span class="string">'%g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g'</span>,[19, inf] );
+0009     fclose(fid);
+0010     
+0011     check= A(1,:);
+0012     speed = A(2,:);
+0013     brakes = A(3,:);
+0014     gas = A(4,:);
+0015     clutch = A(5,:);
+0016     gear = A(6,:);
+0017     lapdistance = A(7,:);
+0018     time = A(8,:);
+0019     position3d = A(9:11,:);
+0020     acceleration3d = A(12:14,:);
+0021     steering = A(15,:);
+0022     gForceLat = A(16,:);
+0023     gForceLong= A(17,:);
+0024     handbrake = A(18,:);
+0025     lapTime = A(19,:);
+0026  
+0027     <span class="comment">%PLOTTING</span>
+0028     figure
+0029     subplot(3,3,1);
+0030     plot(speed);
+0031     title(<span class="string">'Speed'</span>);
+0032     
+0033     subplot(3,3,2);
+0034     plot(brakes);
+0035     title(<span class="string">'Brake'</span>);
+0036     
+0037     subplot(3,3,3);
+0038     plot(gas);
+0039     title(<span class="string">'Gas'</span>)
+0040     
+0041     subplot(3,3,4);   
+0042     plot(clutch);
+0043     title(<span class="string">'Clutch'</span>)
+0044     
+0045     subplot(3,3,5);
+0046     plot(gear);
+0047     title(<span class="string">'Gear'</span>)
+0048     
+0049     subplot(3,3,6);    
+0050     plot(lapdistance);
+0051     title(<span class="string">'Distance'</span>)
+0052    
+0053     subplot(3,3,7);    
+0054     plot(check);
+0055     title(<span class="string">'In-Route'</span>)
+0056     
+0057     subplot(3,3,7);    
+0058     plot(steering);
+0059     title(<span class="string">'Streering'</span>)
+0060     
+0061     <span class="comment">%other</span>
+0062     figure
+0063     
+0064     subplot(2,3,1);
+0065     plot3(position3d(1,:),position3d(2,:),position3d(3,:))
+0066     title(<span class="string">'Position3d'</span>)
+0067      
+0068     subplot(2,3,6);
+0069     plot3(position3d(1,:),position3d(2,:),time)
+0070     title(<span class="string">'Position2d'</span>)
+0071     
+0072     subplot(2,3,2);    
+0073     plot3(acceleration3d(1,:),acceleration3d(2,:),acceleration3d(3,:))
+0074     title(<span class="string">'Acceleration3d'</span>)
+0075     
+0076     subplot(2,3,3);    
+0077     plot(gForceLat);
+0078     title(<span class="string">'Gforce lattitude'</span>)
+0079     
+0080     subplot(2,3,4);    
+0081     plot(gForceLong);
+0082     title(<span class="string">'Gforce Longitude'</span>)
+0083     
+0084     subplot(2,3,5);    
+0085     plot3(gForceLat,gForceLong,time)
+0086     title(<span class="string">'GForce'</span>)
+0087     
+0088     <span class="comment">%Histograms</span>
+0089     figure
+0090     y = 0:0.0001:1;
+0091     
+0092     subplot(2,3,1);
+0093     hist(brakes,y);
+0094     title(<span class="string">'Brake'</span>);
+0095     
+0096     subplot(2,3,2);
+0097     hist(gas,y);
+0098     title(<span class="string">'Gas'</span>)
+0099     
+0100     subplot(2,3,3);   
+0101     hist(clutch,y);
+0102     title(<span class="string">'Clutch'</span>)
+0103     
+0104     subplot(2,3,4);
+0105     x = 0:1:7;
+0106     hist(gear,x);
+0107     title(<span class="string">'Gear'</span>)
+0108     
+0109     subplot(2,3,5);
+0110     g= 0:0.1:450
+0111     hist(abs(steering),g);
+0112     title(<span class="string">'Steering'</span>)
+0113     
+0114     subplot(2,3,6);   
+0115     hist(handbrake,y);
+0116     title(<span class="string">'Handbrake'</span>) 
+0117     
+0118</pre></div>
+<hr><address>Generated on Thu 07-Jun-2012 12:09:53 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

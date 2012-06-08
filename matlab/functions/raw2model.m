@@ -130,7 +130,8 @@ parameters(1,101) = skewness(raw(:,2));
 parameters(1,102) = skewness(raw(:,3));
 parameters(1,103) = skewness(raw(:,4));
 
-
+parameters(1,104) = kurtosis(raw(:,5));
+parameters(1,105) = skewness(raw(:,5));
 
 for x = 1:size(parameters,2)
     if isnan(parameters(1,x)) == 1
