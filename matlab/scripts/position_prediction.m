@@ -51,7 +51,7 @@ Ex = eye(6);% Ex convert the process noise (stdv) into covariance matrix
 P = Ex; % estimate of initial position variance (covariance matrix)
 Ez = .0025;
 
-
+temp=0;
 for x=2:size(time,2)
     %[p,v] = update_carphysics( pos,vel, brakes(:,x) , gas(:,x), steering(:,x), dt, acceleration3d(:,x), gForceLat(:,x),gForceLong(:,x), speed(:,x));   
     velo(ps,x) = velo(ps,x-1) + (dt * acceleration3d(:,x));
@@ -72,9 +72,13 @@ for x=2:size(time,2)
     
     % Update the state estimate.
     %if mod(x,2)==0
+    if mod(x,6) == 0
     magic(p,x) = K .* ([position3d(:,x);0;0;0] - C' .* Q(p,x));
     Q(p,x) = Q(p,x) + magic(p,x);
-    %end
+    temp = magic(p,x);
+    else
+     Q(p,x) = Q(p,x) + temp;  
+    end
     %Q(p,x) = Q(p,x) + K .* ([position3d(:,x);0;0;0] - C' .* Q(p,x));
   
     %Q(p,x) = Q(p,x) + K .* ( Q(p,x) - C' .* [position3d(:,x);0;0;0]); test
