@@ -148,11 +148,16 @@ end
 
 
 
-parameters(1,106) = angle(1,3);
+parameters(1,106) = angle(1,1);
 parameters(1,107) = angle(1,2);
-parameters(1,108) = angle(1,1);
+parameters(1,108) = angle(1,3);
 
-parameters = parameters(1,[2 8 9 10 11 14 15 17 27 31 32 39 49 66 86 91 92 101 102 104 106 107 108]);
+parameters(1,109) = median(raw(:,7));
 
+%parameters = parameters(1,[2 8 9 10 11 14 15 17 27 31 32 39 49 66 86 91 92 101 102 104 106 107 108]);
+%parameters = parameters(1,[1 2 3 4 29 106 107 108]);
+%parameters = parameters(1,[4,6,8, 13, 14, 17, 18, 28, 36, 37, 46, 48, 57, 65, 68, 69, 91, 92, 96, 98, 103, 106]);
+%parameters = parameters(1,[81 82 83 84 85 106 107 108 109]);%cepstrum+angles+checj
+%parameters = parameters(1,[1 2 3 4 29 106 107 108 109]); %check+angles+means
 end
 

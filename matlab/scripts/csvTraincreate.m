@@ -6,7 +6,10 @@ if ~exist('remove_out', 'var')
     remove_out = 0;
 end
 
-data_laps;
+data_laps12
+%data_laps_newtrack
+%data_laps;
+%data_laps2;
  
 p=1;   
 
@@ -32,7 +35,7 @@ end
 %        param(:,t)= param(:,t)/temp;
 %    end
 %end
-cell2csv('laps2.csv', num2cell(param));
+cell2csv('lapsDimR_a.csv', num2cell(param));
 
 end
     

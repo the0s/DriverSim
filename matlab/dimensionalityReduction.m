@@ -17,7 +17,7 @@ end
     [mappedX, mapping] = compute_mapping(X, method, no_dims);
     
     if no_to_keep ~=0
-        mappedX = [mappedX data(:,len-no_to_keep : len)];
+        mappedX = [mappedX data(:,len-no_to_keep +1 : len)];
     end
      
     name = strcat(csvfile(1:size(csvfile,2)-4),method,num2str(no_dims), '.csv')

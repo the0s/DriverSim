@@ -21,7 +21,7 @@ block_pos = floor(((vectors_merge_no + ((angles_block_no-1)*(vectors_merge_no/2)
 overlap = floor((vectors_merge_no/2) * (angles_block_no/2));
 
 z=1;
-usr_input = [gas; brakes; steering; gear; speed; time;];
+usr_input = [gas; brakes; steering; gear; speed; time; check];
 for x=1:overlap:length(position3d)-block_pos 
 usr_inp{1,z} = usr_input(:,x:x+block_pos);
 check_temp{1,z} = check(1,x:x+block_pos);

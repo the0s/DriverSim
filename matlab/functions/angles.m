@@ -76,7 +76,16 @@ end
   
     if plotting=='y'
       plot(11:6:length(angle_sequences(:,block-1))*6+10,angle_sequences(:,block-1),'b');
+      hold on
+       plot(11:6:length(angle_sequences(:,block-1))*6+10,angle_last,'k');
       title('Angles Sequences + last angle');
+    end
+    
+  
+    if plotting=='y'
+       figure;
+      plot(angle_last,'b');
+      title('Angles Sequences');
     end
   
   

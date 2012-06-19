@@ -27,14 +27,14 @@ for x=1:overlap:length(position3d)-block_pos
 pos3d{1,z} = position3d(:,x:x+block_pos);    
 
 max_min{1,z} = [min(position3d(1, x:x+block_pos)) max(position3d(1, x:x+block_pos));
-               min(position3d(2, x:x+block_pos)) max(position3d(2, x:x+block_pos));
-               min(position3d(3, x:x+block_pos)) max(position3d(3, x:x+block_pos))
-              ]; 
+                min(position3d(2, x:x+block_pos)) max(position3d(2, x:x+block_pos));
+                min(position3d(3, x:x+block_pos)) max(position3d(3, x:x+block_pos))
+               ]; 
           
 mean_var{1,z} = [mean(position3d(1, x:x+block_pos)) var(position3d(1, x:x+block_pos));
-               mean(position3d(2, x:x+block_pos)) var(position3d(2, x:x+block_pos));
-               mean(position3d(3, x:x+block_pos)) var(position3d(3, x:x+block_pos))
-              ];           
+                 mean(position3d(2, x:x+block_pos)) var(position3d(2, x:x+block_pos));
+                 mean(position3d(3, x:x+block_pos)) var(position3d(3, x:x+block_pos))
+                ];           
 
 %subplot(2,1,1)
 %plot_vector(indexa{2,z},indexa{4,z});
